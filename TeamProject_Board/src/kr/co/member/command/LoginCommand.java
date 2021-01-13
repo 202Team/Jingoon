@@ -29,10 +29,10 @@ public class LoginCommand implements Command{
 		session.setAttribute("login", login);
 		//로그인 실패시 회원가입 화면으로
 		if(session == null || login == null) {
-			return new CommandAction(true, "member/insert.jsp");
+			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/member/insert.jsp");
 		}
 				
-		return new CommandAction(false, "board/list.do");
+		return new CommandAction(true, "http://localhost:8089/TeamProject_Board/board/list.do");
 	}
 
 	

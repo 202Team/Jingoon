@@ -118,6 +118,40 @@ public class BoardDAO {
 		
 		return list;
 	}
+
+	public BoardDTO read(int num) {
+		BoardDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "select * from myboard where num = ?";
+		ResultSet rs = null;
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				String author = rs.getString("author");
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				String writeday = rs.getString("writeday");
+				int readcnt = rs.getInt("readcnt");
+				int repRoot = rs.getInt("repRoot");
+				int repStep = rs.getInt("repStep");
+				int repIndent = rs.getInt("repIndent");
+				
+			dto = new BoardDTO(num, author, title, content, writeday, readcnt, repRoot, repStep, repIndent);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	finally {
+			closeAll(null, pstmt, rs);
+		}
+		return dto;
+	}
+
+	
 	
 	
 

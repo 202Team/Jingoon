@@ -1,7 +1,6 @@
 package kr.co.member;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -71,14 +70,14 @@ public class MemberDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from user_tbl where userid=? "; 
+		String sql = "select * from user_tbl where id=? "; 
 		try {
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				dbid = rs.getString("userid");
+				dbid = rs.getString("id");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -131,6 +130,64 @@ public class MemberDAO {
 		return num;
 	}
 	
+	public MemberDTO read(String id) {
+		MemberDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from user_tbl where id = ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				int num = rs.getInt("num");
+				String pw = rs.getString("pw");
+				String name = rs.getString("name");
+				String nickname = rs.getString("nickname");
+				String address = rs.getString("address");
+				String day = rs.getString("day");
+				dto = new MemberDTO(num, id, pw, name, nickname, address, day);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, rs);
+		}
+		return dto;
+	}
+	
+	public MemberDTO read(int num) {
+		MemberDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from user_tbl where num = ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				String id = rs.getString("id");
+				String pw = rs.getString("pw");
+				String name = rs.getString("name");
+				String nickname = rs.getString("nickname");
+				String address = rs.getString("address");
+				String day = rs.getString("day");
+				dto = new MemberDTO(num, id, pw, name, nickname, address, day);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, rs);
+		}
+		return dto;
+	}
+	
 	public LoginDTO login(LoginDTO loginParam) {
 		LoginDTO login = null;
 		Connection conn = null;
@@ -164,5 +221,53 @@ public class MemberDAO {
 		}
 		return login;
 	}
+
+	public MemberDTO updateui(String id) {
+
+		return read(id);
+	}
+	public MemberDTO updateui(int num) {
+
+		return read(num);
+	}
+
+	public void update(MemberDTO dto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update user_tbl set name = ?, nickname = ?, address = ? where num = ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getName());
+			pstmt.setString(2, dto.getNickname());
+			pstmt.setString(3, dto.getAddress());
+			pstmt.setInt(4, dto.getNum());
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, null);
+		}
+	}
+
+	public void delete(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from user_tbl where num = ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, null);
+		}
+	}
+	
+	
 	
 }

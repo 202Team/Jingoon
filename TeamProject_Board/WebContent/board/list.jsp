@@ -11,13 +11,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+<a href="http://localhost:8089/TeamProject_Board/main.jsp"><button>홈으로</button></a>
 <c:choose>
 		<c:when test="${empty login}">
-			<a href="loginui.do">로그인</a>
+			<a href="http://localhost:8089/TeamProject_Board/loginui.do">로그인</a>
 		</c:when>
 		<c:otherwise>
-			${login.nickname}님, 환영합니다. <a href="logout.do">로그아웃</a>
-			<a href="board/insertui.do">글쓰기</a>
+			<a href="http://localhost:8089/TeamProject_Board/member/read.do?num=${login.num}">${login.nickname}</a> 님, 환영합니다. 
+			<a href="http://localhost:8089/TeamProject_Board/logout.do">로그아웃</a>
+			<a href="http://localhost:8089/TeamProject_Board/board/insertui.do">글쓰기</a>
 		</c:otherwise>
 	</c:choose>
 
@@ -42,7 +44,7 @@
 					<c:forEach begin="1" end="${dto.repIndent }">
 						&nbsp;
 					</c:forEach>
-					<a href="wread.do?num=${dto.num}">${dto.title }</a>
+					<a href="read.do?num=${dto.num}">${dto.title }</a>
 				</td>
 				<td>${dto.readcnt }</td>
 				<td>${dto.writeday }</td>

@@ -15,6 +15,6 @@ public class LoginUICommand implements Command{
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		
-		return new CommandAction(true, "login.jsp");
+		return new CommandAction(true, "http://localhost:8089/TeamProject_Board/login.jsp");
 	}
 }

@@ -13,10 +13,10 @@
 </head>
 <body>
 <hr>
-	<a href="http://localhost:8089/TeamProject_Board/"><button>홈으로</button></a>
+	<a href="http://localhost:8089/TeamProject_Board/main.jsp"><button>홈으로</button></a>
 
 	<h1>회원 가입 화면</h1>
-	<form action="insert.do" method="post">
+	<form action="http://localhost:8089/TeamProject_Board/member/insert.do" method="post">
 		
 		<label for="id">아이디: </label>
 		<input name="id" id="id" type="email"placeholder="@이메일을 입력해주세요">

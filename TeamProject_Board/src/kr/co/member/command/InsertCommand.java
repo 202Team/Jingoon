@@ -27,7 +27,7 @@ public class InsertCommand implements Command{
 		MemberDAO dao = new MemberDAO();
 		dao.insert(dto);
 				
-		return new CommandAction(true, "http://localhost:8089/main.jsp");
+		return new CommandAction(true, "http://localhost:8089/TeamProject_Board/main.jsp");
 	}
 
 }

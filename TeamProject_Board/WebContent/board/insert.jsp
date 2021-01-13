@@ -7,19 +7,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인 화면</title>
+<title>게시판 글쓰기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 
-<h1>로그인 화면 입니다</h1>
+<h1>글 작성 화면</h1>
 
- <form action="login.do" method="post">
-아이디: <input name="id" type="email" placeholder="@이메일을 입력하세요"><br>
-PASSWORD: <input name="pw" type="password" placeholder="********"><br>
-<input type="submit" value="로그인">
-</form> 
-
+<form action="http://localhost:8089/TeamProject_Board/board/insert.do" method="post">
+	작성자:<input name="author" value="${login.nickname}" readonly><br>
+	제목: <input name="title"><br>
+	내용:<br>	
+	<textarea rows="5" name="content"></textarea>
+	<br>
+	<input type="submit" value="저장">
+</form>
 
 
 </body>
