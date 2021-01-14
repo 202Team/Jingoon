@@ -37,6 +37,22 @@ public class UpdateCommand implements Command{
 		MemberDTO dto = new MemberDTO(num, id, null, name, nickname, address, null); 
 		new MemberDAO().update(dto);
 		
+		//수정후 재 로그인
+		
+		if(session != null) {
+			//로그아웃
+			session.removeAttribute("login");
+			//로그인
+			LoginDTO loginDTO = new LoginDTO();
+			loginDTO.setId(id);
+			loginDTO.setPw(new MemberDAO().read(id).getPw());
+			login = new MemberDAO().login(loginDTO);
+						
+			session.setAttribute("login", login);
+		}
+		
+		
+		
 		
 		return new CommandAction(false, "read.do?id="+id);
 	}

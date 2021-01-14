@@ -11,7 +11,12 @@ day date default sysdate
 )
 
 alter table myboard add id varchar2(20)
+alter table user_tbl add unique (id)
+alter table myboard add constraint fk_myboard_id foreign key(id) references user_tbl(id)
+
 select * from MYBOARD
+
+delete from myboard where title like '%test%'
 
 select * from user_tbl
 update user_tbl set num = 0 where pw = 'master'
@@ -36,6 +41,13 @@ insert into USERMENU_TBL values (11, '/member/updateui.do', 'kr.co.member.comman
 insert into USERMENU_TBL values (12, '/member/update.do', 'kr.co.member.command.UpdateCommand')
 insert into USERMENU_TBL values (13, '/member/delete.do', 'kr.co.member.command.DeleteCommand')
 insert into USERMENU_TBL values (14, '/board/read.do', 'kr.co.board.command.ReadCommand')
+insert into USERMENU_TBL values (15, '/board/updateui.do', 'kr.co.board.command.UpdateUICommand')
+insert into USERMENU_TBL values (16, '/board/update.do', 'kr.co.board.command.UpdateCommand')
+insert into USERMENU_TBL values (17, '/board/delete.do', 'kr.co.board.command.DeleteCommand')
+insert into USERMENU_TBL values (18, '/board/replyui.do', 'kr.co.board.command.ReplyUICommand')
+insert into USERMENU_TBL values (19, '/board/reply.do', 'kr.co.board.command.ReplyCommand')
+
+
 
 update USERMENU_TBL set sp = '/board/insertui.do' where menunum = 14
 update USERMENU_TBL set fullname = 'kr.co.board.command.ReadCommand' where menunum = 14

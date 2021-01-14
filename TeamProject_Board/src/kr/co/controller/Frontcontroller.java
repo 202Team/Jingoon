@@ -51,6 +51,7 @@ public class Frontcontroller extends HttpServlet {
 				}else {
 					request.getRequestDispatcher(ca.getWhere()).forward(request, response);
 				}
+				
 			}else {
 				System.out.println("sp("+sp+")를 요청, com is null");
 			}

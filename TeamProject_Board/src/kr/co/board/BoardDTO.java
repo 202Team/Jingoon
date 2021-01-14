@@ -18,10 +18,38 @@ public class BoardDTO implements Serializable{
 	private int repRoot;
 	private int repStep;
 	private int repIndent;
+	private String id;
 	
 	public BoardDTO() {
 		// TODO Auto-generated constructor stub
 	}
+	
+
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+	public BoardDTO(int num, String author, String title, String content, String writeday, int readcnt, int repRoot,
+			int repStep, int repIndent, String id) {
+		super();
+		this.num = num;
+		this.author = author;
+		this.title = title;
+		this.content = content;
+		this.writeday = writeday;
+		this.readcnt = readcnt;
+		this.repRoot = repRoot;
+		this.repStep = repStep;
+		this.repIndent = repIndent;
+		this.id = id;
+	}
+
 
 	public BoardDTO(int num, String author, String title, String content, String writeday, int readcnt, int repRoot,
 			int repStep, int repIndent) {

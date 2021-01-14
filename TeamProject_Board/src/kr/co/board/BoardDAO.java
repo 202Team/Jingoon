@@ -43,8 +43,8 @@ public class BoardDAO {
 	public void insert(BoardDTO dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "insert into myboard (num,author,title,content,repRoot,repStep,repIndent) "
-				+ "values (?,?,?,?,?,?,?)";
+		String sql = "insert into myboard (num,author,title,content,repRoot,repStep,repIndent,id) "
+				+ "values (?,?,?,?,?,?,?,?)";
 		try {
 			conn = dataFactory.getConnection();
 			int num = insertNum(conn);
@@ -56,6 +56,7 @@ public class BoardDAO {
 			pstmt.setInt(5, num);
 			pstmt.setInt(6, 0);
 			pstmt.setInt(7, 0);
+			pstmt.setString(8, dto.getId());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,8 +126,11 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		String sql = "select * from myboard where num = ?";
 		ResultSet rs = null;
+		boolean isOk= false;
 		try {
 			conn = dataFactory.getConnection();
+			conn.setAutoCommit(false);
+			readcntAdd(conn, num);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs = pstmt.executeQuery();
@@ -139,16 +143,201 @@ public class BoardDAO {
 				int repRoot = rs.getInt("repRoot");
 				int repStep = rs.getInt("repStep");
 				int repIndent = rs.getInt("repIndent");
-				
+				String id = rs.getString("id");
 			dto = new BoardDTO(num, author, title, content, writeday, readcnt, repRoot, repStep, repIndent);
+			dto.setId(id);
 			}
-
+		isOk = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	finally {
-			closeAll(null, pstmt, rs);
+			transaction(conn, isOk);
+			closeAll(conn, pstmt, rs);
 		}
 		return dto;
+	}
+
+	private void readcntAdd(Connection conn, int num) {
+		PreparedStatement pstmt = null;
+		String sql ="update myboard set readcnt = readcnt+1 where num = ? ";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(null, pstmt, null);
+		}
+		
+	}
+
+	public BoardDTO updateui(int num) {
+		
+		return read(num);
+	}
+
+	public void update(BoardDTO dto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update myboard set author=?, title = ?, content = ?, writeday=sysdate  where num = ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getAuthor());
+			pstmt.setString(2, dto.getTitle());
+			pstmt.setString(3, dto.getContent());
+			pstmt.setInt(4, dto.getNum());
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, null);
+		}
+		
+	}
+
+	public void delete(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from myboard where num = ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, null);
+		}
+		
+	}
+
+	public void reply(BoardDTO dto, int oriNum) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "insert into myboard (num,author,title,content,repRoot,repStep,repIndent,id) "
+				+ "values (?,?,?,?,?,?,?,?)";
+		boolean isOk =false;
+		try {
+			conn = dataFactory.getConnection();
+			conn.setAutoCommit(false);
+			int num = insertNum(conn);
+			BoardDTO oriDTO = read(oriNum);
+			insertReplyOtion(conn, oriDTO);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.setString(2, dto.getAuthor());
+			pstmt.setString(3, dto.getTitle());
+			pstmt.setString(4, dto.getContent());
+			pstmt.setInt(5, oriDTO.getRepRoot());
+			pstmt.setInt(6, oriDTO.getRepStep()+1);
+			pstmt.setInt(7, oriDTO.getRepIndent()+1);
+			pstmt.setString(8, dto.getId());
+			pstmt.executeUpdate();
+			isOk =  true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			transaction(conn, isOk);
+			closeAll(conn, pstmt, null);
+		}
+	}
+
+	private void transaction(Connection conn, boolean isOk) {
+		try {
+			if (isOk) {
+				conn.commit();
+			}else {
+				conn.rollback();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+	}
+
+	private void insertReplyOtion(Connection conn, BoardDTO oriDTO) {
+		PreparedStatement pstmt = null;
+		String sql = "update myboard set repStep = repStep +1 where repRoot = ? and repStep > ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, oriDTO.getRepRoot());
+			pstmt.setInt(2, oriDTO.getRepStep());
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(null, pstmt, null);
+		}
+	}
+	
+	public PageTO page(int curPage) {
+		PageTO to = new PageTO(curPage);
+		List<BoardDTO> list = new ArrayList<BoardDTO>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from "
+				+ "(select rownum rnum, num,author,title,writeday,readcnt,repRoot,repStep,repIndent,id from "
+				+ "(select * from myboard order by repRoot desc, repStep asc ))"
+				+ "where rnum between ? and ?";
+		try {
+			conn = dataFactory.getConnection();
+			int amount = getAmount(conn);
+			to.setAmount(amount);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, to.getStarNum());
+			pstmt.setInt(2, to.getEndNum());
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				int num = rs.getInt("num");
+				String author = rs.getString("author");
+				String title = rs.getString("title");
+				String writeday =rs.getString("writeday");
+				int readcnt = rs.getInt("readcnt");
+				int repRoot = rs.getInt("repRoot");
+				int repStep = rs.getInt("repStep");
+				int repIndent = rs.getInt("repIndent");
+				String id = rs.getString("id");
+				BoardDTO dto = new BoardDTO(num, author, title, null, writeday, readcnt, repRoot, repStep, repIndent, id);
+				list.add(dto);
+			}
+			to.setList(list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, rs);
+		}
+		return to;
+	}
+
+	private int getAmount(Connection conn) {
+		int amount = 0;
+		PreparedStatement pstmt = null;
+		String sql = "select count(num) from myboard";
+		ResultSet rs= null;
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				amount = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(null, pstmt, null);
+		}
+		
+		return amount;
 	}
 
 	

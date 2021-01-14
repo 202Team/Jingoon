@@ -11,7 +11,7 @@ import kr.co.board.BoardDTO;
 import kr.co.command.Command;
 import kr.co.domain.CommandAction;
 
-public class InsertCommand implements Command{
+public class ReplyCommand implements Command{
 
 	@Override
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
@@ -20,10 +20,12 @@ public class InsertCommand implements Command{
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		String id = request.getParameter("id");
+		String oriNumS = request.getParameter("oriNum");
+		int oriNum = Integer.parseInt(oriNumS);
 		
 		BoardDTO dto =new BoardDTO(0, author, title, content, null, 0, 0, 0, 0);
 		dto.setId(id);
-		new BoardDAO().insert(dto);
+		new BoardDAO().reply(dto, oriNum);
 		
 		return new CommandAction(true, "list.do");
 	}

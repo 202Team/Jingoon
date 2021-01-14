@@ -24,8 +24,7 @@ public class InsertCommand implements Command{
 		String address = request.getParameter("address");
 				
 		MemberDTO dto = new MemberDTO(0, id, pw, name, nickname, address, null);
-		MemberDAO dao = new MemberDAO();
-		dao.insert(dto);
+		new MemberDAO().insert(dto);
 				
 		return new CommandAction(true, "http://localhost:8089/TeamProject_Board/main.jsp");
 	}

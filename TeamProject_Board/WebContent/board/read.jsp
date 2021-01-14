@@ -44,14 +44,27 @@ ${dto.content }<br>
 	<a href="http://localhost:8089/TeamProject_Board/loginui.do">로그인</a>
 	</c:when>
 	<c:otherwise>
-		<c:if test="${login.nickname eq dto.author }">
-			<a href="update.do?num=${dto.num}">수정</a>
-			<a>삭제</a>
+		<c:if test="${login.id eq dto.id }">
+			<a href="updateui.do?num=${dto.num}">수정</a>
+			<a id="del" href="delete.do?num=${dto.num}">삭제</a>
 		</c:if>
-		<a>댓글</a>
+		<a href="replyui.do?num=${dto.num}">답글</a>
 		<a href="http://localhost:8089/TeamProject_Board/board/insertui.do"><button>글쓰기</button></a>
 	</c:otherwise>
-</c:choose>		
+</c:choose>	
+
+	
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#del").click(function(event){
+		event.preventDefault();
+		var ch = confirm("게시글을 삭제 하시겠습니까?");
+		if(ch) location.assign("delete.do?num=${dto.num}");
+	
+	});
+});
+
+</script>
 
 </body>
 </html>

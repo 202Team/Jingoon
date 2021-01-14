@@ -14,8 +14,8 @@ public class MemberDTO implements Serializable{
 	private String name; 
 	private String nickname; 
 	private String address; 
-	private String day; 
-	
+	private String day;
+		
 	public MemberDTO() {
 		// TODO Auto-generated constructor stub
 	}

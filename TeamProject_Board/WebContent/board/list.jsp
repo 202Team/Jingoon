@@ -12,7 +12,8 @@
 </head>
 <body>
 <a href="http://localhost:8089/TeamProject_Board/main.jsp"><button>홈으로</button></a>
-<c:choose>
+<%-- 	
+	<c:choose>
 		<c:when test="${empty login}">
 			<a href="http://localhost:8089/TeamProject_Board/loginui.do">로그인</a>
 		</c:when>
@@ -21,7 +22,8 @@
 			<a href="http://localhost:8089/TeamProject_Board/logout.do">로그아웃</a>
 			<a href="http://localhost:8089/TeamProject_Board/board/insertui.do">글쓰기</a>
 		</c:otherwise>
-	</c:choose>
+	</c:choose> 
+	--%>
 
 <h1>글 목록</h1>
 
@@ -44,6 +46,7 @@
 					<c:forEach begin="1" end="${dto.repIndent }">
 						&nbsp;
 					</c:forEach>
+					<c:if test="${dto.repIndent > 0}">re: </c:if>
 					<a href="read.do?num=${dto.num}">${dto.title }</a>
 				</td>
 				<td>${dto.readcnt }</td>
@@ -52,5 +55,10 @@
 		</c:forEach>
 	</tbody>
 </table>
+<%-- 페이지 목록 --%>
+<div>
+	<jsp:include page="page.jsp"/>
+</div>
+
 </body>
 </html>
