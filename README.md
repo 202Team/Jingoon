@@ -1,6 +1,52 @@
 # Jingoon
 진군
 
+1-14일 진행내용
+
+게시글의 수정/삭제 적용
+- 작성자와 수정자의 로그인 id가 같을 때 수정/삭제글자가 나타남
+
+추가 - board: /update, /UpdateCommand, /deleteCommand, /ReplyUICommand, /ReplyCommand, /PageTO, /page.jsp, /
+수정 - board: /boardDTO, /boardDAO, /InsertCommand, /InsertUICommand, board/read.jsp
+
+게시글 수정
+- 제목과 내용, 작성시간을 수정시간으로 변경
+- 회원정보 수정하면 재로그인해서 정보반영하기.
+- 회원정보를 수정후 게시글을 수정하면 작성자명 변경하기. 
+
+게시글의 삭제
+- 삭제 할 때 로그인되어있는지 확인
+
+게시글 조회수 적용
+- 게시글보기를 할때 readcnt를 1씩 증가
+- 게시글보기와 조회수업데이트 메서드를 트렌젝션 적용
+
+답글
+- 게시글보기에서 답글화면으로 이동해서 답글 작성
+- 답글 작성시 이전 답글의 reStep을 하나씩 증가시켜 정렬시 후순위로 보이게
+- 답글 작성시 reIndent 를 기존 글의 +1 해주고 들여쓰기 적용
+- (reIndent > 0 이면 re: 를 제목앞에 붙임)
+- 이전답글의 repStep업데이트메서드와 답글입력메서드를 같은 connection을 사용해서 트렌젝션 적용
+
+게시글의 페이징 적용
+- 게시글 리스트의 반환을 PageTO에 저장해서 한다.
+- 게시글목록화면 하단에 페이징할 수있는 넘버링 추가
+- 넘버링 전후로 < > 를 추가해 한페이지씩 이동
+- 현재페이지가 1페이지면 <보이지 않고, 마지막페이지면 >가 보이지 않는다
+- 주소창에 페이지 음수를 적었을때 페이지를 1페이지로 고정
+
+*게시글테이블의 id 컬럼을 추가하고, 회원테이블의 id를 외래키로 설정
+( 회원 본인이 작성한 게시글의 수정과 삭제 확인을 위해서)
+alter table myboard add id varchar2(20)
+alter table myboard add constraint fk_myboard_id foreign key(id) references user_tbl(id)
+* 회원 테이블의 id(email)가 고유키가 아니라서 외래키가 적용 안되서 유니크 키로 설정후 외래키 설정
+alter table user_tbl add unique (id)
+alter table myboard add constraint fk_myboard_id foreign key(id) references user_tbl(id)
+-> 게시글보기에서 로그인id와 게시글작성자 id를 비교후 같으면 수정/삭제를 출력
+-> 로그인 하지 않거나 id가 같지 않으면 글쓰기와 답글만 출력
+
+===========================================
+
 1-13일 진행내용
 
 member/InsertUIcommaind, member/InsertCommand, member/ReadCommad, member/UpdateCommand, member/UpdateUICommand, member/DeleteCommand
