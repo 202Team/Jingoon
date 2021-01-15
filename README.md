@@ -1,6 +1,33 @@
 # Jingoon
 진군
 
+1-15일 진행내용
+
+게시글의 페이징 적용
+- 주소창에 totalpage이상의 양수를 적었을 때 마지막 페이지로 이동
+토탈페이지보다 큰수의 주소창 입력을 막기위해 Amount() 메서드 오버로딩, ListCommand에서 totalPage를 구해서 비교
+- 목록 메뉴추가 : 게시글보기(글 자세히보기read.do) 중에 목록페이지(list.do)로 돌아가면 원래페이지(curPage)로 돌아가기 추가
+- 현재 보고있는 페이지를 페이지 목록에서 강조
+- 총 페이지가 1페이지 일경우 페이징목록 안보이게 적용
+BoardDAO, board/ListCommand
+
+게시글 검색기능 적용
+- 검색페이지 페이징 적용
+(서치옵션과 서치키워드값을 바인딩하고 페이징시 주소값에 추가)
+- 검색 결과 없음 표시
+- 검색 결과가 1페이지 일경우 페이징목록 안보이게 적용
+- 현재 보고있는 페이지를 페이지 목록에서 강조
+SearchCommand, board/list.jsp, searchlist.jsp, searchpage.jsp, searchPage(), Amount()오버로딩
+
+파일 업로드
+- 게시판에 파일 업로드 기능 추가
+첨부파일이 있을때는 파라미터들을 MultipartRequest 객체가 받아서 게시글을 생성하고, 생성된 게시글의 num값을 
+받아서 파일DB에 저장,(이후 그 값으로 해당 게시글에서 다운로드 적용)
+첨부파일이 없을 때를 스크립트로 구분하여 action를 이전 InsertCommand로 응답
+FileUploadCommand, FileDAO, FileDTO, create fileload_tbl, board/insert.jsp
+
+=========================================================
+
 1-14일 진행내용
 
 게시글의 수정/삭제 적용
