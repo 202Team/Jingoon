@@ -11,6 +11,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+<a href="http://localhost:8089/TeamProject_Board/main.jsp"><button>홈으로</button></a>
 <c:choose>
 	<c:when test="${empty login}">
 		<a href="http://localhost:8089/TeamProject_Board/loginui.do">로그인</a>
@@ -27,7 +28,7 @@
 		<c:if test="${login.num eq 0 }">
 			<a href="">관리자 메뉴 추가하기</a>
 		</c:if>
-		<a href="http://localhost:8089/TeamProject_Board/board/list.do"><button>글목록보기</button></a>
+		<a href="http://localhost:8089/TeamProject_Board/board/list.do?curPage=${curPage}"><button>글목록보기</button></a>
 		
 <h1>제목 : ${dto.title}</h1>
 글번호 : ${dto.num }<br>

@@ -24,6 +24,7 @@ public class InsertCommand implements Command{
 		BoardDTO dto =new BoardDTO(0, author, title, content, null, 0, 0, 0, 0);
 		dto.setId(id);
 		new BoardDAO().insert(dto);
+		 
 		
 		return new CommandAction(true, "list.do");
 	}

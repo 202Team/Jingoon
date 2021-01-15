@@ -17,9 +17,12 @@ public class ReadCommand implements Command{
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		String boardNumStr = request.getParameter("num");
+		String curPageStr = request.getParameter("curPage");
+		int curPage = Integer.parseInt(curPageStr);
 		int num = Integer.parseInt(boardNumStr);
 		BoardDTO dto = new BoardDAO().read(num);
 		request.setAttribute("dto", dto);
+		request.setAttribute("curPage", curPage);
 		return new CommandAction(false, "read.jsp");
 	}
 

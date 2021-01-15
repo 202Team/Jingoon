@@ -13,7 +13,7 @@ day date default sysdate
 alter table myboard add id varchar2(20)
 alter table user_tbl add unique (id)
 alter table myboard add constraint fk_myboard_id foreign key(id) references user_tbl(id)
-
+ALTER TABLE myboard MODIFY (author varchar2(100))
 select * from MYBOARD
 
 delete from myboard where title like '%test%'
@@ -46,7 +46,8 @@ insert into USERMENU_TBL values (16, '/board/update.do', 'kr.co.board.command.Up
 insert into USERMENU_TBL values (17, '/board/delete.do', 'kr.co.board.command.DeleteCommand')
 insert into USERMENU_TBL values (18, '/board/replyui.do', 'kr.co.board.command.ReplyUICommand')
 insert into USERMENU_TBL values (19, '/board/reply.do', 'kr.co.board.command.ReplyCommand')
-
+insert into USERMENU_TBL values (20, '/board/search.do', 'kr.co.board.command.SearchCommand')
+insert into USERMENU_TBL values (21, '/fieload/fileupload.do', 'kr.co.fileload.command.FileUploadCommand')
 
 
 update USERMENU_TBL set sp = '/board/insertui.do' where menunum = 14
@@ -55,3 +56,18 @@ update USERMENU_TBL set fullname = 'kr.co.board.command.ReadCommand' where menun
 select * from USERMENU_TBL
 
 commit
+
+create table fileload_tbl(
+num number primary key,
+save varchar2(50),
+realPath varchar2(100),
+id varchar2(20) unique,
+sysFileName varchar2(100),
+orgFileName varchar2(100),
+boardNum number
+)
+
+select * from fileload_tbl
+
+
+

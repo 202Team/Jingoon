@@ -18,11 +18,11 @@ public class UpdateCommand implements Command{
 	@Override
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-//		HttpSession session = request.getSession(false);
-//		LoginDTO login =(LoginDTO) session.getAttribute("login");
-//		if(session ==null || login == null) {
-//			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/loginui.do");
-//		}
+		HttpSession session = request.getSession(false);
+		LoginDTO login =(LoginDTO) session.getAttribute("login");
+		if(session ==null || login == null) {
+			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/loginui.do");
+		}
 		
 		String numS = request.getParameter("num");
 		String title = request.getParameter("title");

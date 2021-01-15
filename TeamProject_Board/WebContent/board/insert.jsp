@@ -9,6 +9,11 @@
 <meta charset="UTF-8">
 <title>게시판 글쓰기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style type="text/css">
+	#sub{
+	<%--위치 이동 예정 --%>
+	}
+</style>
 </head>
 <body>
 
@@ -21,10 +26,30 @@
 	내용:<br>	
 	<textarea rows="5" name="content"></textarea>
 	<br>
-	<input type="submit" value="저장">
+	<%-- 파일 업로드 추가 --%>
+	<input id="filename" name="filename" type="file">
+	<input id="sub" type="submit" value="저장">
 </form>
+
+
 <a href="list.do"><button>취소</button></a>
 
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#sub").click(function(event){
+		var file = $("#filename").val();
+		if(file){
+			alert(file + "파일 있다");//완료후 삭제
+			$("form").attr("action", "http://localhost:8089/TeamProject_Board/fieload/fileupload.do");
+			$("form").attr("enctype", "multipart/form-data");
+			$("form").submit();
+			return;
+		}
+		alert("파일 없이 업로드");// 테스트용
+	})
+});
+
+</script>
 
 </body>
 </html>

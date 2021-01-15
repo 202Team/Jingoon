@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 목록입니다.</title>
+<title>게시글 목록</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style type="text/css">
 	.curPage{
@@ -22,7 +22,7 @@
 </head>
 <body>
 <a href="http://localhost:8089/TeamProject_Board/main.jsp"><button>홈으로</button></a>
- 	
+
 	<c:choose>
 		<c:when test="${empty login}">
 			<a href="http://localhost:8089/TeamProject_Board/loginui.do">로그인</a>
@@ -34,8 +34,8 @@
 		</c:otherwise>
 	</c:choose> 
 
-<h1>글 목록</h1>
-
+<c:if test="${not empty list}"><h1>"${searchkeyword}" 검색 결과</h1></c:if>
+<c:if test="${empty list}"><h1>"${searchkeyword}" 의 검색 결과가 없습니다.</h1></c:if>
 <table>
 	<thead>
 		<tr>
@@ -64,16 +64,18 @@
 		</c:forEach>
 	</tbody>
 </table>
-<%-- 페이지 목록 --%>
+<%-- 검색 페이지 목록 --%>
 <div>
 	<c:if test="${to.totalPage > 1}">
-		<jsp:include page="page.jsp"/>
-	</c:if>	
+		<jsp:include page="searchpage.jsp"/>
+	</c:if>
+	
 </div>
-
+<%-- 검색 창 --%>
 <div>
 	<jsp:include page="search.jsp"/>
 </div>
+
 
 </body>
 </html>
