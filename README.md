@@ -1,6 +1,45 @@
 # Jingoon
 진군
 
+1-18일 진행내용
+
+게시글 수정, 삭제, 파일 다운로드
+DeleteCommand, FrontController, FileDownloadCommand, FileDownload, read.jsp, FileDAO
+
+
+게시글 수정 후 목록화면으로 이동시 curPage 정보 누락으로 널포인트발생
+- 입력 curPage없을 때 초기값 1로 설정
+
+파일테이블의 id컬럼에 유저테이블의 id컬럼을 외래키로 설정. 
+- alter table fileload_tbl add constraint fk_fileload_tbl_id foreign key (id) references user_tbl(id)
+- 유저의 아이디로 작성한 게시글과 업로드 파일을 한번에 검색 가능(관리자용 추후 추가)
+
+파일 다운로드
+- 게시글보기화면에 첨부파일 링크를 추가
+- 첨부파일의 이름을 누르면 다운로드
+- 첨부파일이 없을 때는 "첨부파일이 없습니다"를 표시
+
+게시글 삭제 업데이트
+- 디렉토리의 저장된 파일의 삭제
+- DB에 저장된 파일정보(파일테이블) 삭제
+
+
+** 파일다운로드
+파일링크를 누르면 커맨드로 이동해서 파일 다운로드메서드를 실행하게 구현
+심각: 경로가 [/TeamProject_Board]인 컨텍스트의 서블릿 [kr.co.controller.Frontcontroller]을(를) 위한 Servlet.service() 호출이 예외를 발생시켰습니다.
+java.lang.IllegalStateException: 응답이 이미 커밋된 후에는, sendRedirect()를 호출할 수 없습니다.
+==> 예외 발생
+==> 해결
+파일다운로드 메서드 중 ServletOutputStream out = response.getOutputStream(); 을 사용
+이미 요청을 응답하여 포워딩을 처리할 수 없음(포워딩 필요하지 않음)
+Command클래스의 return을 null 처리, controller에서 포워딩 할때 코드 추가
+CommandAction ca =com.execute(request, response);
+if(ca == null) {// 파일 다운로드 시 요청을 끝내고 null값을 반환해 요청을 끝낸다
+	return;
+}
+
+==========================================================================
+
 1-15일 진행내용
 
 게시글의 페이징 적용
