@@ -104,6 +104,13 @@ public class FileDTO implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+
+	@Override
+	public String toString() {
+		return "FileDTO [realPath=" + realPath + ", sysFileName=" + sysFileName + ", boardNum=" + boardNum + "]";
+	}
+	
 	
 
 }

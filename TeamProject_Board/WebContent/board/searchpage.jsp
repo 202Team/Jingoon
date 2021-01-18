@@ -5,6 +5,10 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <c:if test="${to.curPage > 1 }">
+<a href="search.do?searchname=${searchname}&searchkeyword=${searchkeyword}&curPage=1" >처음</a>
+</c:if>
+
+<c:if test="${to.curPage > 1 }">
 <a href="search.do?searchname=${searchname}&searchkeyword=${searchkeyword}&curPage=${to.curPage - 1 }" >전</a>
 </c:if>
 

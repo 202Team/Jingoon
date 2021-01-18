@@ -48,6 +48,9 @@ insert into USERMENU_TBL values (18, '/board/replyui.do', 'kr.co.board.command.R
 insert into USERMENU_TBL values (19, '/board/reply.do', 'kr.co.board.command.ReplyCommand')
 insert into USERMENU_TBL values (20, '/board/search.do', 'kr.co.board.command.SearchCommand')
 insert into USERMENU_TBL values (21, '/fieload/fileupload.do', 'kr.co.fileload.command.FileUploadCommand')
+--/board/filedownload.do 를 굳이 /fileload/filedownload.do로 변경 해야 할까?
+insert into USERMENU_TBL values (22, '/board/filedownload.do', 'kr.co.fileload.command.FileDownloadCommand')
+/board/filedownload.do
 
 
 update USERMENU_TBL set sp = '/board/insertui.do' where menunum = 14
@@ -60,14 +63,14 @@ commit
 create table fileload_tbl(
 num number primary key,
 save varchar2(50),
-realPath varchar2(100),
-id varchar2(20) unique,
+realPath varchar2(500),
+id varchar2(20),
 sysFileName varchar2(100),
 orgFileName varchar2(100),
 boardNum number
 )
 
+alter table fileload_tbl add constraint fk_fileload_tbl_id foreign key (id) references user_tbl(id)
+
 select * from fileload_tbl
-
-
 

@@ -28,19 +28,14 @@ public class FileUploadCommand implements Command{
 		String orgFileName = multi.getOriginalFileName("filename");
 		String sysFileName = multi.getFilesystemName("filename");
 				
-		System.out.println("realPath는 " +realPath);//완성후 삭제	
-		System.out.println("sysFileName은 " +sysFileName);//완성후 삭제
-		//게시글 등록 .
 		String author = multi.getParameter("author");
 		String title = multi.getParameter("title");
 		String content = multi.getParameter("content");
-		System.out.println(author);//완료후 삭제
-		System.out.println(title);//완료후 삭제
-		System.out.println(content);//완료후 삭제
 		BoardDTO dto =new BoardDTO(0, author, title, content, null, 0, 0, 0, 0);
 		dto.setId(id);
 		int boardNum = new BoardDAO().insert(dto);
 		FileDTO dtoF = new FileDTO(0, realPath, id, sysFileName, orgFileName, boardNum);
+		
 		new FileDAO().upload(dtoF);
 	
 		

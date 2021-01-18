@@ -56,6 +56,7 @@ public class FileDAO {
 			pstmt.setString(5, dto.getSysFileName());
 			pstmt.setString(6, dto.getOrgFileName());
 			pstmt.setInt(7, dto.getBoardNum());
+			pstmt.executeUpdate();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,6 +85,83 @@ public class FileDAO {
 			closeAll(null, pstmt, rs);
 		}
 		return num;
+	}
+
+	public FileDTO select(int boardNum) {
+		FileDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs=null;
+		String sql = "select * from fileload_tbl where boardNum = ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNum);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {// if를 쓰지만 추가 할때 while 
+				int num = rs.getInt("num");
+				String save = rs.getString("save");
+				String realPath = rs.getString("realPath");
+				String sysFileName = rs.getString("sysFileName");
+				String orgFileName = rs.getString("orgFileName");
+				String id = rs.getString("id");
+				dto = new FileDTO(num, save, realPath, id, sysFileName, orgFileName, boardNum);
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, rs);
+		}
+		return dto;
+	}
+
+	public FileDTO selectFileNum(int fileNum) {
+		FileDTO dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs=null;
+		String sql = "select * from fileload_tbl where num = ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, fileNum);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {// if를 쓰지만 추가 할때 while 
+				int boardNum = rs.getInt("boardNum");
+				String save = rs.getString("save");
+				String realPath = rs.getString("realPath");
+				String sysFileName = rs.getString("sysFileName");
+				String orgFileName = rs.getString("orgFileName");
+				String id = rs.getString("id");
+				dto = new FileDTO(fileNum, save, realPath, id, sysFileName, orgFileName, boardNum);
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, rs);
+		}
+		return dto;
+	}
+
+	public void delete(int boardNum) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from fileload_tbl where boardNum = ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNum);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, null);
+		}
+		
 	}
 	
 	

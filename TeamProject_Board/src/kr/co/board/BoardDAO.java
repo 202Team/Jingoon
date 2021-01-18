@@ -241,6 +241,11 @@ public class BoardDAO {
 			closeAll(conn, pstmt, null);
 		}
 	}
+	
+	
+//	 public boolean blindYes(int num) { Connection conn = null; PreparedStatement
+//	 pstmt = null; String sql =
+//	 "select count(num) from (select * from ) where reStep = ?"; }	
 
 	public void reply(BoardDTO dto, int oriNum) {
 		Connection conn = null;

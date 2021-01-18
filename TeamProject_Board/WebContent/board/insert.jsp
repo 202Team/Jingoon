@@ -39,13 +39,12 @@ $(document).ready(function(){
 	$("#sub").click(function(event){
 		var file = $("#filename").val();
 		if(file){
-			alert(file + "파일 있다");//완료후 삭제
 			$("form").attr("action", "http://localhost:8089/TeamProject_Board/fieload/fileupload.do");
 			$("form").attr("enctype", "multipart/form-data");
 			$("form").submit();
 			return;
 		}
-		alert("파일 없이 업로드");// 테스트용
+	//	alert("파일 없이 업로드");// 테스트용
 	})
 });
 

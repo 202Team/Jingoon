@@ -52,8 +52,15 @@ ${dto.content }<br>
 		<a href="replyui.do?num=${dto.num}">답글</a>
 		<a href="http://localhost:8089/TeamProject_Board/board/insertui.do"><button>글쓰기</button></a>
 	</c:otherwise>
-</c:choose>	
-
+</c:choose>
+<!-- 첨부 파일 링크  -->	
+<p>
+	첨부파일: 
+	<a href="filedownload.do?sysFileName=${dtoFile.sysFileName}&fileNum=${dtoFile.num}"> ${dtoFile.orgFileName}</a>
+	<c:if test="${empty dtoFile}">
+		첨부파일이 없습니다.
+	</c:if>
+</p>
 	
 <script type="text/javascript">
 $(document).ready(function(){

@@ -45,7 +45,11 @@ public class Frontcontroller extends HttpServlet {
 		
 		if(fullname != null) {
 			if(com != null) {
+				
 				CommandAction ca =com.execute(request, response);
+				if(ca == null) {// 파일 다운로드 시 요청을 끝내고 null값을 반환해 요청을 끝낸다
+					return;
+				}
 				if(ca.isRedirect()) {
 					response.sendRedirect(ca.getWhere());
 				}else {
