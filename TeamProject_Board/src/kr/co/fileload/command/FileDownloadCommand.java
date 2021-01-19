@@ -1,6 +1,5 @@
 package kr.co.fileload.command;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;

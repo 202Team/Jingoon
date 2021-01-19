@@ -241,11 +241,51 @@ public class BoardDAO {
 			closeAll(conn, pstmt, null);
 		}
 	}
+	public void blind(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update myboard set author= ?, title=?, content =? where num = ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "BLIND");
+			pstmt.setString(2, "BLIND");
+			pstmt.setString(3, "BLIND");
+			pstmt.setInt(4, num);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, null);
+		}
+	}
 	
 	
-//	 public boolean blindYes(int num) { Connection conn = null; PreparedStatement
-//	 pstmt = null; String sql =
-//	 "select count(num) from (select * from ) where reStep = ?"; }	
+	 public boolean blindYes(int num) {
+		 boolean ok = false;
+		 Connection conn = null;
+		 PreparedStatement  pstmt = null;
+		 String sql = "select count(num) from myboard where repRoot = ?"; 
+		 ResultSet rs = null;
+		 try {
+			conn = dataFactory.getConnection();
+			BoardDTO dto = read(num);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getRepRoot());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				int count = rs.getInt(1);
+				if(count > 1) ok = true;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, rs);
+		}
+		 return ok;
+	 }	
 
 	public void reply(BoardDTO dto, int oriNum) {
 		Connection conn = null;

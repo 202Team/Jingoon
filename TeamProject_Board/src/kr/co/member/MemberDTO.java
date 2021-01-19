@@ -15,9 +15,58 @@ public class MemberDTO implements Serializable{
 	private String nickname; 
 	private String address; 
 	private String day;
+	private String birth;
+	private int master;
+	private int age;
 		
 	public MemberDTO() {
-		// TODO Auto-generated constructor stub
+	}
+		
+	
+
+	public int getAge() {
+		return age;
+	}
+
+
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+
+
+	public int getMaster() {
+		return master;
+	}
+
+
+
+	public void setMaster(int master) {
+		this.master = master;
+	}
+
+
+
+	public MemberDTO(int num, String id, String pw, String name, String nickname, String address, String day,
+			String birth) {
+		super();
+		this.num = num;
+		this.id = id;
+		this.pw = pw;
+		this.name = name;
+		this.nickname = nickname;
+		this.address = address;
+		this.day = day;
+		this.birth = birth;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
 	}
 
 	public MemberDTO(int num, String id, String pw, String name, String nickname, String address, String day) {

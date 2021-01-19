@@ -24,6 +24,7 @@ public class UpdateCommand implements Command{
 		String name = request.getParameter("name");
 		String nickname = request.getParameter("nickname");
 		String address = request.getParameter("address");
+		String birth = request.getParameter("birth");
 		// 로그인 유지 확인
 		HttpSession session = request.getSession(false);
 		if(session == null) {
@@ -35,6 +36,7 @@ public class UpdateCommand implements Command{
 		}
 		
 		MemberDTO dto = new MemberDTO(num, id, null, name, nickname, address, null); 
+		dto.setBirth(birth);
 		new MemberDAO().update(dto);
 		
 		//수정후 재 로그인

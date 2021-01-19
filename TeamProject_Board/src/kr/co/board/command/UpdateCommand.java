@@ -19,8 +19,11 @@ public class UpdateCommand implements Command{
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		HttpSession session = request.getSession(false);
+		if(session ==null){
+			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/loginui.do");
+		}
 		LoginDTO login =(LoginDTO) session.getAttribute("login");
-		if(session ==null || login == null) {
+		if(login == null) {
 			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/loginui.do");
 		}
 		

@@ -8,13 +8,12 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입 페이지</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-<hr>
-	<a href="http://localhost:8089/TeamProject_Board/main.jsp"><button>홈으로</button></a>
 
+	<a href="http://localhost:8089/TeamProject_Board/main.jsp"><button>홈으로</button></a>
+<hr>
 	<h1>회원 가입 화면</h1>
 	<form action="http://localhost:8089/TeamProject_Board/member/insert.do" method="post">
 		
@@ -28,9 +27,18 @@
 		<label for="name">이름: </label><input name="name" id="name"><br>
 		<label for="nickname">닉네임: </label>
 		<input	name="nickname" id="nickname"></input><br>
-		<label for="address">주소: </label><input name="address" id="address"><br>
+		
+		<label for="birth">생일: </label>
+		<input	name="birth" id="birth" type="date"></input><br>
+		
+		<label for="address">주소: </label><input name="address" id="address">
+		<button id="addr" >주소검색</button><br>
+		
 		<input type="submit" value="가입"><br>
 	</form>
+	
+	
+		
 
 	<script type="text/javascript">
 		var a = false;
@@ -42,6 +50,7 @@
 				var pw1 = $("input[name=pw1]").val();
 				var pw2 = $("input[name=pw2]").val();
 				var namen = $("input[name=name]").val();
+				//var addr = $("#address").val();
 				if (!a) { //아이디 중복체크 
 					alert("id 중복체크를 해주세요");
 					event.preventDefault();
@@ -89,6 +98,13 @@
 					complete : function(result) { /* 성공과 실패에 상관없이 실행하는 이벤트 */
 					}
 				});
+			});
+			
+			$("#addr").click(function(e){
+				e.preventDefault();
+				window.open("jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+				// 선택된 주소 받기.
+			
 			});
 		});
 	</script>

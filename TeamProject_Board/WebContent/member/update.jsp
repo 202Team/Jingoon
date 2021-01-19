@@ -32,6 +32,10 @@
 		
 		<label for="address">주소: </label>
 		<input name="address" id="address" value="${dto.address}"><br>
+		
+		<label for="birth">생일: </label>
+		<input name="birth" id="birth" type="date" value="${dto.birth}"><br>
+		
 		<input type="submit" value="수정완료"><br>
 	</form>
 

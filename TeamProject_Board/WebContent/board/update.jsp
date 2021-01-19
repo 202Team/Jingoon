@@ -14,7 +14,7 @@
 <h1>${dto.num} 번 글의 수정화면</h1>
 작성자: ${dto.author}<br>
 작성시간: ${dto.writeday}<br>
-<%-- 마지막 수정시간: ${updateday} <br> 나중에 추가 --%>
+
 <form action="update.do" method="post">
 <input name="num" value="${dto.num }" type="hidden"><br>
 <input name="author" value="${login.nickname}" type="hidden" readonly="readonly"><br>

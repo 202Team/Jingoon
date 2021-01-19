@@ -1,6 +1,7 @@
-package kr.co.board.command;
+package kr.co.member.command;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,23 +11,28 @@ import javax.servlet.http.HttpSession;
 import kr.co.command.Command;
 import kr.co.domain.CommandAction;
 import kr.co.member.LoginDTO;
+import kr.co.member.MemberDAO;
+import kr.co.member.MemberDTO;
 
-public class InsertUICommand implements Command{
+public class MemberCommand implements Command{
 
 	@Override
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		// 주소를 직접 타이핑해서 글쓰기 화면에 접근하면 로그인 확인
 		HttpSession session = request.getSession(false);
-		if(session ==null) {
+		if(session ==null){
 			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/loginui.do");
 		}
-		LoginDTO login = (LoginDTO) session.getAttribute("login");
-		if( login==null ) {
+		LoginDTO login =(LoginDTO) session.getAttribute("login");
+		if(login == null || login.getMaster() != 1 ) {
 			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/loginui.do");
 		}
 		
-		return new CommandAction(true, "http://localhost:8089/TeamProject_Board/board/insert.jsp");
+		List<MemberDTO> list = new MemberDAO().list();
+		
+		request.setAttribute("list", list);
+		
+		return new CommandAction(false, "master/member.jsp");
 	}
 
 }

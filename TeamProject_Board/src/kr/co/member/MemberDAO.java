@@ -3,7 +3,9 @@ package kr.co.member;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.naming.Context;
@@ -90,7 +92,7 @@ public class MemberDAO {
 	public void insert(MemberDTO dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql ="insert into user_tbl (num, id, pw, name, nickname, address) values (?,?,?,?,?,?) ";
+		String sql ="insert into user_tbl (num, id, pw, name, nickname, address, birth) values (?,?,?,?,?,?,?) ";
 		try {
 			conn = dataFactory.getConnection();
 			int num = insertNum(conn);
@@ -101,6 +103,7 @@ public class MemberDAO {
 			pstmt.setString(4, dto.getName());
 			pstmt.setString(5, dto.getNickname());
 			pstmt.setString(6, dto.getAddress());
+			pstmt.setString(7, dto.getBirth());	
 			pstmt.executeUpdate();
 			
 		} catch (Exception e) {
@@ -178,7 +181,12 @@ public class MemberDAO {
 				String nickname = rs.getString("nickname");
 				String address = rs.getString("address");
 				String day = rs.getString("day");
+				String birth = rs.getString("birth");
+				if(birth != null) {
+					birth = birth.substring(0,10);
+				}
 				dto = new MemberDTO(num, id, pw, name, nickname, address, day);
+				dto.setBirth(birth);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -206,6 +214,7 @@ public class MemberDAO {
 				String address = rs.getString("address");
 				String name = rs.getString("name");
 				String day = rs.getString("day");
+				int master = rs.getInt("master");
 				login = new LoginDTO();
 				login.setId(loginParam.getId());
 				login.setNickname(nickname);
@@ -213,6 +222,7 @@ public class MemberDAO {
 				login.setAddress(address);
 				login.setName(name);
 				login.setDay(day);
+				login.setMaster(master);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -234,14 +244,15 @@ public class MemberDAO {
 	public void update(MemberDTO dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "update user_tbl set name = ?, nickname = ?, address = ? where num = ?";
+		String sql = "update user_tbl set name = ?, nickname = ?, address = ?, birth = ? where num = ?";
 		try {
 			conn = dataFactory.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getName());
 			pstmt.setString(2, dto.getNickname());
 			pstmt.setString(3, dto.getAddress());
-			pstmt.setInt(4, dto.getNum());
+			pstmt.setString(4, dto.getBirth());
+			pstmt.setInt(5, dto.getNum());
 			
 			pstmt.executeUpdate();
 			
@@ -266,6 +277,69 @@ public class MemberDAO {
 		} finally {
 			closeAll(conn, pstmt, null);
 		}
+	}
+
+	public List<MemberDTO> list() {
+		List<MemberDTO> list = new ArrayList<MemberDTO>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "select * from user_tbl";
+		ResultSet rs = null;
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				int num = rs.getInt("num");
+				String id = rs.getNString("id");
+				String pw = rs.getString("pw");
+				String nickname = rs.getString("nickname");
+				String address = rs.getString("address");
+				String name = rs.getString("name");
+				String day = rs.getString("day");
+				String birth = rs.getString("birth");
+				if(birth !=null) {
+					birth = birth.substring(0, 10);
+				}
+				int master = rs.getInt("master");
+				int age = getAge(conn, num);
+				MemberDTO dto = new MemberDTO(num, id, pw, name, nickname, address, day, birth);
+				dto.setMaster(master);
+				dto.setAge(age);
+				list.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, rs);
+		}
+		return list;
+	}
+
+	private int getAge(Connection conn, int num) {
+		int age = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = 
+				"select a.num, b.한국나이 from user_tbl a, (select num, (to_char(sysdate, 'YYYY') - to_char(birth, 'YYYY')) + 1 as 한국나이 from user_tbl) b where a.num = b.num and a.num = ?";
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				String a = rs.getString("한국나이");
+				if(a != null) {
+					age = Integer.parseInt(a) ;
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(null, pstmt, rs);
+		}
+		return age;
 	}
 	
 	

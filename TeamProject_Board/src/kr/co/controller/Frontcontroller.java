@@ -57,7 +57,7 @@ public class Frontcontroller extends HttpServlet {
 				}
 				
 			}else {
-				System.out.println("sp("+sp+")를 요청, com is null");
+				System.out.println(fullname+"sp("+sp+")를 요청, com is null");
 			}
 		}else {
 			System.out.println("sp("+sp+")를 요청,fullname is null");

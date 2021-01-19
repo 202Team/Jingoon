@@ -14,12 +14,16 @@ alter table myboard add id varchar2(20)
 alter table user_tbl add unique (id)
 alter table myboard add constraint fk_myboard_id foreign key(id) references user_tbl(id)
 ALTER TABLE myboard MODIFY (author varchar2(100))
+ALTER TABLE user_tbl MODIFY (address varchar2(300))
+alter table user_tbl add birth date
+alter table user_tbl add master number default '0'
+
 select * from MYBOARD
 
 delete from myboard where title like '%test%'
 
 select * from user_tbl
-update user_tbl set num = 0 where pw = 'master'
+update user_tbl set master = 1 where num = 0
 
 create table usermenu_tbl(
 menuNum number(2) primary key,
@@ -50,11 +54,12 @@ insert into USERMENU_TBL values (20, '/board/search.do', 'kr.co.board.command.Se
 insert into USERMENU_TBL values (21, '/fieload/fileupload.do', 'kr.co.fileload.command.FileUploadCommand')
 --/board/filedownload.do 를 굳이 /fileload/filedownload.do로 변경 해야 할까?
 insert into USERMENU_TBL values (22, '/board/filedownload.do', 'kr.co.fileload.command.FileDownloadCommand')
-/board/filedownload.do
-
+insert into USERMENU_TBL values (22, '/board/filedownload.do', 'kr.co.fileload.command.FileDownloadCommand')
+insert into USERMENU_TBL values (23, '/member/jusoPopup.do', 'kr.co.member.command.JusoPoupCommand')
+insert into USERMENU_TBL values (24, '/member.do', 'kr.co.member.command.MemberCommand')
 
 update USERMENU_TBL set sp = '/board/insertui.do' where menunum = 14
-update USERMENU_TBL set fullname = 'kr.co.board.command.ReadCommand' where menunum = 14
+update USERMENU_TBL set fullname = 'kr.co.member.command.JusoPoupCommand' where menunum = 23
 
 select * from USERMENU_TBL
 
@@ -73,4 +78,7 @@ boardNum number
 alter table fileload_tbl add constraint fk_fileload_tbl_id foreign key (id) references user_tbl(id)
 
 select * from fileload_tbl
+select a.num, b.한국나이 from user_tbl a, (select num, (to_char(sysdate, 'YYYY') - to_char(birth, 'YYYY')) + 1 as 한국나이 from user_tbl) b where a.num = b.num and a.num = 1
 
+
+select (to_char(sysdate, 'YYYY') - to_char(birth, 'YYYY')) + 1 as 한국나이 from user_tbl

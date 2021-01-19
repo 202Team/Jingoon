@@ -26,15 +26,27 @@ public class DeleteCommand implements Command{
 		HttpSession session = request.getSession(false);
 		LoginDTO login = (LoginDTO) session.getAttribute("login");
 		if(session != null && login != null ) {
-			new BoardDAO().delete(num);
-			//첨부파일 디렉토리 파일삭제(게시글의 글번호로 조회, 삭제)
-			FileDTO dtoF= new FileDAO().select(num);
-			String filePath = dtoF.getRealPath() + File.separator + dtoF.getSysFileName();
-			File file = new File(filePath);
-			file.delete();
-			// DB의 파일 정보 삭제
-			new FileDAO().delete(num);
-			
+				
+			// 게시글 삭제 or 블라인드
+			boolean yes = new BoardDAO().blindYes(num);
+			if(yes) {
+				//게시글 블라인드처리
+				new BoardDAO().blind(num);
+			}else {
+				//첨부파일 디렉토리 파일삭제(게시글의 글번호로 조회, 삭제)
+				FileDTO dtoF= new FileDAO().select(num);
+				if(dtoF != null) {
+					String filePath = dtoF.getRealPath() + File.separator + dtoF.getSysFileName();
+					File file = new File(filePath);
+					if(file.exists()) { // 파일이 있다면
+						file.delete();
+						// DB의 파일 정보 삭제
+						new FileDAO().delete(num);
+					}
+				}
+				//게시글 삭제
+				new BoardDAO().delete(num);
+			}
 		}
 		
 		return new CommandAction(true, "list.do");

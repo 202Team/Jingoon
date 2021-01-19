@@ -25,8 +25,8 @@
 		<a href="http://localhost:8089/TeamProject_Board/board/insertui.do"><button>글쓰기</button></a>
 	</c:otherwise>
 </c:choose>
-		<c:if test="${login.num eq 0 }">
-			<a href="">관리자 메뉴 추가하기</a>
+		<c:if test="${login.master eq 1 }">
+			<a href="member.do"><button>관리자 메뉴</button></a>
 		</c:if>
 		<a href="http://localhost:8089/TeamProject_Board/board/list.do"><button>글목록보기</button></a>
 </body>

@@ -20,6 +20,7 @@
 회원 이름: ${dto.name} <br>
 회원 닉네임: ${dto.nickname} <br>
 회원 주소: ${dto.address} <br>
+회원 생일: ${dto.birth}<br>
 
 <a id="update.do" href="updateui.do?num=${dto.num}">회원정보수정</a>
 <a id="delete.do" href="delete.do?num=${dto.num}">회원탈퇴(추후 2차인증))</a>

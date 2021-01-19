@@ -16,10 +16,22 @@ public class LoginDTO implements Serializable{
 	private String nickname; 
 	private String address; 
 	private String day;
+	private int master;
 	
 	public LoginDTO() {
 		// TODO Auto-generated constructor stub
 	}
+
+	
+	public int getMaster() {
+		return master;
+	}
+
+
+	public void setMaster(int master) {
+		this.master = master;
+	}
+
 
 	public int getNum() {
 		return num;
