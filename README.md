@@ -1,6 +1,35 @@
 # Jingoon
 진군
 
+1-19일 진행내용
+
+게시글 삭제업데이트, 블라인드 추가, 회원정보 생일 추가, 관리자 기능 추가, 나이 추가
+MemberInsertCommand, insert.jsp, MemberDAO, MemberDTO, LoginDTO, MemberCommand, member.jsp, MemberReadCommand, MemberDeleteCommand, MemberUpdateCommand, read.jsp
+
+답글이 있는 게시글 삭제
+- 게시글 블라인드( 작성자, 내용을 "Blind")
+회원정보에 생일입력 추가
+- 유저 테이블 birth추가, 회원가입화면 생일 추가, 회원정보화면 생일 추가, 회원정보수정화면 생일 추가
+(입력타입은 date이고 DB저장 타입도 date이지만 java에서는 String으로 처리 ( yy-mm-dd-)형식)
+관리자 계정(권한) 추가
+- 유저 테이블 master 컬럼을 추가 default 0
+- 로그인세션에 정보 추가
+- 홈 화면에 관리자메뉴 추가
+관리자 메뉴 생성
+- 회원목록 추가
+회원 정보 나이 추가
+- 나이를 계산해 리스트에 반영하는 메서드 추가
+-- 유저테이블의 두 검색값(테이블)을 조인하여 유저테이블 번호에 해당하는 나이를 첨가
+- 생일이 null인 회원은  초기값 0으로 설정
+회원가입 주소 검색기능
+- 행정안전부 도로명주소 API (진행중)
+
+
+**
+select a.num, b.한국나이 from user_tbl a, (select num, (to_char(sysdate, 'YYYY') - to_char(birth, 'YYYY')) + 1 as 한국나이 from user_tbl) b where a.num = b.num and a.num = ?
+
+==========================================================================
+
 1-18일 진행내용
 
 게시글 수정, 삭제, 파일 다운로드
