@@ -283,7 +283,7 @@ public class MemberDAO {
 		List<MemberDTO> list = new ArrayList<MemberDTO>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "select * from user_tbl";
+		String sql = "select * from user_tbl order by num asc";
 		ResultSet rs = null;
 		try {
 			conn = dataFactory.getConnection();
@@ -341,7 +341,37 @@ public class MemberDAO {
 		}
 		return age;
 	}
-	
+
+	public void ConfirmDelete(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update user_tbl set master = -1 where num = ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, null);
+		}
+	}
+	public void RollbackDelete(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update user_tbl set master = 0 where num = ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, null);
+		}
+	}
 	
 	
 }

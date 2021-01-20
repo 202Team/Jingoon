@@ -28,11 +28,14 @@ public class UpdateUICommand implements Command{
 		}
 		LoginDTO login = (LoginDTO)session.getAttribute("login");
 		if(login == null || !(num == login.getNum())){
+			if(login.getMaster() == 1) {
+				request.setAttribute("dto", dto);
+				return new CommandAction(false, "update.jsp");
+			}
 			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/login.jsp");
 		}
 		
 		request.setAttribute("dto", dto);
-		
 		return new CommandAction(false, "update.jsp");
 	}
 

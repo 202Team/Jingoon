@@ -22,16 +22,16 @@
 회원 주소: ${dto.address} <br>
 회원 생일: ${dto.birth}<br>
 
-<a id="update.do" href="updateui.do?num=${dto.num}">회원정보수정</a>
-<a id="delete.do" href="delete.do?num=${dto.num}">회원탈퇴(추후 2차인증))</a>
+<a id="update" href="updateui.do?num=${dto.num}">회원정보수정</a>
+<a id="delete" href="read.do?num=${dto.num}">회원탈퇴</a>
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$("delete").click(function(event){
+	$("#delete").click(function(event){
 		event.preventDefault();
 		var chooce = confirm("정말 삭제 하시겠습니까?");
-		if(choose){
-			location.assign("delete.do?id=${dto.id}")
+		if(chooce){
+			location.assign("delete.do?num=${dto.num}");
 		}
 	});
 	

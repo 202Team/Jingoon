@@ -9,7 +9,33 @@ nickname varchar2(30) default '별명없음',
 address varchar2(30),
 day date default sysdate
 )
-
+-- 수정된 테이블
+create table user_tbl (
+num number primary key,
+id varchar2(20) unique,
+pw varchar2(20) not null,
+name varchar2(15) not null,
+nickname varchar2(30) default '별명없음',
+address varchar2(300),
+day date default sysdate,
+birth date,
+master number default '0'
+)
+--
+create table myboard(
+num number(4) primary key,
+author varchar2(100) not null, 
+title varchar2(100) not null,
+content varchar2(2000) not null,
+writeday date default sysdate,
+readcnt number(6) default 0,
+repRoot number(4),
+repStep number(4),
+repIndent number(2),
+id varchar2(20)
+)
+alter table myboard add constraint fk_myboard_id foreign key(id) references user_tbl(id)
+--
 alter table myboard add id varchar2(20)
 alter table user_tbl add unique (id)
 alter table myboard add constraint fk_myboard_id foreign key(id) references user_tbl(id)
@@ -17,6 +43,7 @@ ALTER TABLE myboard MODIFY (author varchar2(100))
 ALTER TABLE user_tbl MODIFY (address varchar2(300))
 alter table user_tbl add birth date
 alter table user_tbl add master number default '0'
+
 
 select * from MYBOARD
 
@@ -52,11 +79,11 @@ insert into USERMENU_TBL values (18, '/board/replyui.do', 'kr.co.board.command.R
 insert into USERMENU_TBL values (19, '/board/reply.do', 'kr.co.board.command.ReplyCommand')
 insert into USERMENU_TBL values (20, '/board/search.do', 'kr.co.board.command.SearchCommand')
 insert into USERMENU_TBL values (21, '/fieload/fileupload.do', 'kr.co.fileload.command.FileUploadCommand')
---/board/filedownload.do 를 굳이 /fileload/filedownload.do로 변경 해야 할까?
 insert into USERMENU_TBL values (22, '/board/filedownload.do', 'kr.co.fileload.command.FileDownloadCommand')
 insert into USERMENU_TBL values (22, '/board/filedownload.do', 'kr.co.fileload.command.FileDownloadCommand')
 insert into USERMENU_TBL values (23, '/member/jusoPopup.do', 'kr.co.member.command.JusoPoupCommand')
 insert into USERMENU_TBL values (24, '/member.do', 'kr.co.member.command.MemberCommand')
+insert into USERMENU_TBL values (25, '/rollbackdelete.do', 'kr.co.member.command.RollbackDeleteCommand')
 
 update USERMENU_TBL set sp = '/board/insertui.do' where menunum = 14
 update USERMENU_TBL set fullname = 'kr.co.member.command.JusoPoupCommand' where menunum = 23

@@ -26,10 +26,14 @@ public class DeleteCommand implements Command{
 		}
 		LoginDTO login = (LoginDTO) session.getAttribute("login");
 		if (login == null || num != login.getNum()) {
+			if(login.getMaster() == 1) {
+				new MemberDAO().ConfirmDelete(num);
+				return new CommandAction(true, "http://localhost:8089/TeamProject_Board/member.do");
+			}
 			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/login.jsp");
 		}
 		// 이후 추가 탈퇴시 삭제가 아닌 회원정보에 탈퇴정보를 표시해서 로그인불가
-		new MemberDAO().delete(num);
+		new MemberDAO().ConfirmDelete(num);
 				
 		return new CommandAction(true, "http://localhost:8089/TeamProject_Board/logout.do");
 	}

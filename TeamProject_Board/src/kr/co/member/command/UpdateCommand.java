@@ -32,6 +32,12 @@ public class UpdateCommand implements Command{
 		}
 		LoginDTO login = (LoginDTO)session.getAttribute("login");
 		if(login == null || !id.equals(login.getId())){
+			if(login.getMaster() == 1) {
+				MemberDTO dto = new MemberDTO(num, id, null, name, nickname, address, null); 
+				dto.setBirth(birth);
+				new MemberDAO().update(dto);
+				return new CommandAction(true, "http://localhost:8089/TeamProject_Board/member.do");
+			}
 			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/login.jsp");
 		}
 		
@@ -52,10 +58,6 @@ public class UpdateCommand implements Command{
 						
 			session.setAttribute("login", login);
 		}
-		
-		
-		
-		
 		return new CommandAction(false, "read.do?id="+id);
 	}
 

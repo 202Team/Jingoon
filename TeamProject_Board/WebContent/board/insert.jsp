@@ -16,7 +16,13 @@
 </style>
 </head>
 <body>
+<a href="http://localhost:8089/TeamProject_Board/main.jsp"><button>홈으로</button></a>
+	<c:if test="${login.master eq 1 }">
+			<a href="http://localhost:8089/TeamProject_Board/member.do"><button>관리자 메뉴(회원관리)</button></a>
+		</c:if>
+		<a href="http://localhost:8089/TeamProject_Board/board/list.do"><button>글목록보기</button></a>
 
+	<hr>
 <h1>글 작성 화면</h1>
 
 <form action="http://localhost:8089/TeamProject_Board/board/insert.do" method="post">

@@ -19,15 +19,12 @@
 		<a href="http://localhost:8089/TeamProject_Board/member/insertui.do"><button>회원가입</button></a>
 	</c:when>
 	<c:otherwise>
-		<a href="http://localhost:8089/TeamProject_Board/member/read.do?num=${login.num}">${login.nickname}님 환영합니다,</a>
+		<a href="http://localhost:8089/TeamProject_Board/member/read.do?num=${login.num}">${login.nickname}</a>님 환영합니다,
 		<a href="http://localhost:8089/TeamProject_Board/logout.do">로그아웃</a>
 		<hr>
 		<a href="http://localhost:8089/TeamProject_Board/board/insertui.do"><button>글쓰기</button></a>
 	</c:otherwise>
 </c:choose>
-		<c:if test="${login.num eq 0 }">
-			<a href="">관리자 메뉴 추가하기</a>
-		</c:if>
 		<a href="http://localhost:8089/TeamProject_Board/board/list.do?curPage=${curPage}"><button>글목록보기</button></a>
 		
 <h1>제목 : ${dto.title}</h1>
@@ -38,7 +35,11 @@
 ${dto.content }<br>
 
 <hr>
-
+<c:if test="${login.num eq 0 }">
+	<a href="http://localhost:8089/TeamProject_Board/member.do">관리자 메뉴</a>
+	<a href="updateui.do?num=${dto.num}">수정</a>
+	<a id="del" href="delete.do?num=${dto.num}">삭제</a>
+</c:if>
 <c:choose>
 	<c:when test="${empty login}">
 <!-- 로그인 안했을 때 추가할 내용  -->

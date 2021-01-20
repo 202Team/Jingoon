@@ -21,8 +21,8 @@
 </style>
 </head>
 <body>
+
 <a href="http://localhost:8089/TeamProject_Board/main.jsp"><button>홈으로</button></a>
- 	
 	<c:choose>
 		<c:when test="${empty login}">
 			<a href="http://localhost:8089/TeamProject_Board/loginui.do">로그인</a>
@@ -32,7 +32,8 @@
 			<a href="http://localhost:8089/TeamProject_Board/logout.do">로그아웃</a>
 			<a href="http://localhost:8089/TeamProject_Board/board/insertui.do">글쓰기</a>
 		</c:otherwise>
-	</c:choose> 
+	</c:choose>
+	<hr> 
 
 <h1>글 목록</h1>
 
