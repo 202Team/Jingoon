@@ -103,7 +103,6 @@
 		        event.preventDefault();
 		        $("iframe").attr("src", "http://localhost:8089/TeamProject_Board/board/list.do")
 		    });
-
 		});
 	</script>
 </body>

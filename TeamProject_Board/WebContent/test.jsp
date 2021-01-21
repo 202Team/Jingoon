@@ -4,7 +4,7 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <!-- bootstrap -->
@@ -47,7 +47,12 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 
-
+<span class="glyphicon glyphicon-pencil" aria-hidden="true">
+ </span>
+ 		<li>
+          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+          <span class="glyphicon-class">glyphicon glyphicon-pencil</span>
+        </li>
 
 </body>
 </html>

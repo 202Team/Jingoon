@@ -72,13 +72,13 @@ public class BoardDAO {
 	private int insertNum(Connection conn) {
 		int num =-1;
 		PreparedStatement pstmt = null;
-		String sql = "select max(num) from myboard ";
+		String sql = "select nvl2(max(num), max(num)+1, 1) from myboard ";
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				num = rs.getInt(1)+1;
+				num = rs.getInt(1);
 			}
 
 		} catch (Exception e) {

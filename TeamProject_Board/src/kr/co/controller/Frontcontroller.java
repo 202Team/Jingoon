@@ -34,7 +34,7 @@ public class Frontcontroller extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		Map<String, String> menu =dao.menu();
 		String fullname = menu.get(sp);
-		System.out.println("sp("+sp+")를 요청");
+		System.out.print("sp("+sp+")를 요청");// 콘솔확인용
 		try {
 			Class<?> testClass = Class.forName(fullname);
 			Constructor<?> cons = testClass.getConstructor();
@@ -44,6 +44,7 @@ public class Frontcontroller extends HttpServlet {
 		}
 		
 		if(fullname != null) {
+			System.out.println(" * 풀네임:"+fullname);// 오류찾기를 위해 추가
 			if(com != null) {
 				
 				CommandAction ca =com.execute(request, response);

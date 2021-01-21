@@ -23,7 +23,7 @@ public class RollbackDeleteCommand implements Command{
 		
 		if(session != null && login != null && login.getMaster() == 1) {
 			PrintWriter out = response.getWriter();
-			out.print("alert('탈퇴한 회원정보를 되돌립니다')");
+			out.print("alert('탈퇴한 회원정보를 되돌립니다')");// 안나옴 주소를 가지고 새창에서 경고띄우고 가져온 주로소 반환해 보기
 			String numS = request.getParameter("num");
 			int num = Integer.parseInt(numS);
 			new MemberDAO().RollbackDelete(num);
@@ -31,7 +31,7 @@ public class RollbackDeleteCommand implements Command{
 		}
 		
 		PrintWriter out = response.getWriter();
-		out.print("alert('관리자계정으로 로그인 해주세요.')");
+		out.print("alert('관리자계정으로 로그인 해주세요.')");// 안나옴
 		
 		return new CommandAction(true, "loginui.do");
 	}

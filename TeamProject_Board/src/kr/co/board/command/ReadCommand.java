@@ -19,6 +19,7 @@ public class ReadCommand implements Command{
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		String boardNumStr = request.getParameter("num");
+		
 		String curPageStr = request.getParameter("curPage");
 		int curPage = 1;
 		if(curPageStr != null) {
