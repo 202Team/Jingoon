@@ -1,6 +1,56 @@
 # Jingoon
 진군
 
+1-21일 진행내용
+
+jusoPopup.jsp, member/insert.jsp, BoardDAO, login.jsp, 팀회의
+
+@ 팀 회의 내용
+
+각자 코딩한 진행내용을 서로 살펴보며 토의
+- 이해가 안되는 코드, 생각과 다른코드, 새로운 코드 등 서로의 코드를 보고 보완할 점이나 수정할 점 등을 토의
+
+ 진군,  도현, 진택
+- 게시글 쓰기에서 오류
+select max(num) from myboard , num = rs.getInt(1)+1 을 
+select nvl2(max(num), max(num)+1, 1) from myboard , num = rs.getInt(1) 로 수정
+- 인코딩필터의 Annotation 변경
+- DB에 생성한 로그인테이블 어디다 쓰는지 모르겠음
+- LoginCommand (로그인실패시 코드가 없음)
+: 틀리거나 없는 아이디도 로그인됨
+- 수정/삭제기능들에 대한 세션의 미적용
+- id체크기능이 서블릿으로 작성됨-> 커멘드로 코딩(MVC2 방식)
+- insert.jsp의 input태그에서 email, pw, tell 등 입력type 적용
+- LogoutCommand의 세션(false): 세션이없으면 새로생성함, 중복코드(포워딩)
+- 조회수 업데이트 기능 추가
+- 오탈자: 멤버DTO sql문 id 빠짐
+- boardinsert.jsp 게시글 입력 from태그의 전송방식이 작성되지않음
+- 코딩을 클라이언트의 요청 > 프론트컨트롤 서블릿의 연결 > 커맨드의 처리 순서로 하면 좋겠음
+- Map을 이용한 객체 생성, sp를 fullname과 연결하기가 이해하기 어려움
+- Tomcat의 PortNumber가 서로 다른점을 수정(8089로 통일)
+- board/Insert.do가 Board/ReadCommand를 호출하는 이유(오류 찾기)
+- 수정 보완할 점이 있는지 찾아보기
+
+---
+
+진군 21일 진행상황
+
+회원가입 주소입력에 검색기능 추가
+- 행정안전부 도로명주소 API (devU01TX0FVVEgyMDIxMDExOTA5MzQzODExMDcxMDE=)
+
+검색 팝업창이 닫히지 않는 문제 해결
+- jusoCallBack 함수에서 사용하지 않는 파라미터들을 전부 가져와서 생긴 문제
+- 사용하는 파라미터만 받게 함수 수정
+
+첫글 쓰기 num생성 메서드 수정
+- select max(num) from myboard , num = rs.getInt(1)+1 을 
+- select nvl2(max(num), max(num)+1, 1) from myboard , num = rs.getInt(1) 로 수정
+
+부트스트랩 적용
+- 부트스트랩 사용법, 로그인 화면 적용
+
+=================================================================================================
+
 1-20일 진행내용
 
 RollbackDeleteCommand, MemberCommand, Member/UpdateCommand, Board/UpdateCommand, Member/DeleteCommand, Board/DeleteCommand, Member/DeleteCommad, LoginCommand, MemberDAO
