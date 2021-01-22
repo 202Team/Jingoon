@@ -1,34 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>홈 화면</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
+<title>HOME</title>
+
+<!-- 부트스트랩 -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
 
-<h1>HOME 화면</h1>
-<c:choose>
-	<c:when test="${empty login}">
-		<a href="http://localhost:8089/TeamProject_Board/loginui.do">로그인</a>
-		<hr>
-		<a href="http://localhost:8089/TeamProject_Board/member/insertui.do"><button>회원가입</button></a>
-	</c:when>
-	<c:otherwise>
-		<a href="http://localhost:8089/TeamProject_Board/member/read.do?num=${login.num}">${login.nickname}</a>님 환영합니다.
-		<a href="http://localhost:8089/TeamProject_Board/logout.do">로그아웃</a>
-		<hr>
-		<a href="http://localhost:8089/TeamProject_Board/board/insertui.do"><button>글쓰기</button></a>
-	</c:otherwise>
-</c:choose>
-		<c:if test="${login.master eq 1 }">
-			<a href="member.do"><button>관리자 메뉴(회원관리)</button></a>
-		</c:if>
-		<a href="http://localhost:8089/TeamProject_Board/board/list.do"><button>글목록보기</button></a>
+	<!--네비게이션바 추가-->
+	<jsp:include page="/header.jsp"/>
+
+	<c:if test="${not empty login}">
+	<div class="alert alert-success" role="alert">
+        <strong><font style="vertical-align: inherit;">
+        <font style="vertical-align: inherit;">${login.nickname } </font></font></strong>
+        <font style="vertical-align: inherit;">
+        <font style="vertical-align: inherit;">님 환영합니다.
+      </font></font></div>
+     </c:if>
+     <c:if test="${empty login}">
+     <div class="alert alert-info" role="alert">
+        <strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href="/TeamProject_Board/loginui.do">로그인</a>! </font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">이 필요합니다.
+      </font></font></div>
+     </c:if>
+
+
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+	<script src="bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
