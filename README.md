@@ -1,6 +1,22 @@
 # Jingoon
 진군
 
+1-22일 진행내용
+
+bootstrap, main.jsp, header.jsp, list.jsp, page.jsp
+
+bootstrap css
+- 홈, 게시판, 페이징
+
+네비게이션바 적용
+- 홈, 게시판, 회원메뉴(드랍)
+
+네이게이션바를 헤더로 페이징시 항상 위에 적용
+- 각 페이지를 이동시 해당 페이지 버튼 이벤트
+- 로그아웃시 로그인버튼과 회원가입버튼 
+
+----
+
 1-21일 진행내용
 
 jusoPopup.jsp, member/insert.jsp, BoardDAO, login.jsp, 팀회의
