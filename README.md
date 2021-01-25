@@ -1,6 +1,25 @@
 # Jingoon
 진군
 
+1-25일 진행내용
+
+board/page.jsp, search.jsp, searchlist.jsp, searchpage.jsp, login.jsp, insert.jsp, reply.jsp, update.jsp, header.jsp
+member/insert.jsp
+
+css 적용/ 게시판, 페이징, 로그인, 글쓰기, 답글, 글수정, 헤더, 회원가입
+
+게시판 이동페이지 입력 삭제, 
+검색페이지 css 적용
+로그인화면 heder 적용
+글쓰기 화면 css 적용
+답글 화면 css 적용
+글수정 화면 css 적용
+게시글 보기 화면에서 관리자는 게시글의 작성자의 정보로 접근가능 추가
+- member/ReadCommand 수정
+회원가입 화면 css 적용
+
+---
+
 1-22일 진행내용
 
 bootstrap, main.jsp, header.jsp, list.jsp, page.jsp
