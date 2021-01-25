@@ -20,7 +20,14 @@
 
 	<!--네비게이션바 추가-->
 	<jsp:include page="/header.jsp"></jsp:include>
+	
+
+	
 	<div class="container">
+			<%-- 검색 입력 --%>
+<div class="text-center">
+	<jsp:include page="search.jsp"/>
+</div>
 		<table class="table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
@@ -50,17 +57,13 @@
 		</table>
 		<a class="text-right" href="${not empty login ? 'insertui.do':'/TeamProject_Board/loginui.do' }">
 		<button class="btn btn-primary pull-right"><span ></span>${not empty login ? "글쓰기" :"로그인"}</button></a>
+			<%-- 페이지 목록 --%>
+		<div class="text-center">
+			<c:if test="${to.totalPage > 1}">
+				<jsp:include page="page.jsp"/>
+			</c:if>	
+		</div>	
 	</div>
-	<%-- 페이지 목록 --%>
-<div>
-	<c:if test="${to.totalPage > 1}">
-		<jsp:include page="page.jsp"/>
-	</c:if>	
-</div>
-
-<div>
-	<jsp:include page="search.jsp"/>
-</div>
 
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
@@ -69,7 +72,6 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#li_list").attr("class", "active");
-			$("#li_main").attr("class", "non");
 			$("#btn_go").click(function(e){
 				e.preventDefault();
 				$("form_go").submit();

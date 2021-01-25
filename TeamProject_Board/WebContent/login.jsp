@@ -15,16 +15,16 @@
     <link rel="icon" href="../../favicon.ico">
     
 <title>로그인 화면</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<!-- bootstrap -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="http://bootstrapk.com/examples/signin/signin.css">
+<!-- 부트스트랩 -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
 
 </head>
 <body>
-
+	<!--네비게이션바 추가-->
+	<jsp:include page="/header.jsp"/>
+	
     <div class="container">
 
       <form class="form-signin" action="login.do" method="post">
@@ -40,14 +40,19 @@
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
+      <div class="btn">
+      <h3><a href="">비밀번호 찾기(미구현)</a></h3>
+      </div>
+      <a href="member/insertui.do"><button class="btn btn-lg btn-primary btn-block">회원가입</button></a>
 
-    </div> <!-- /container -->
+    </div> 
 
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-
-
-
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$("#li_login").attr("class", "active");
+		})
+	</script>
 </body>
 </html>

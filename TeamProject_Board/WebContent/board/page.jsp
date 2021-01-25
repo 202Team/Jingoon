@@ -4,7 +4,7 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<div class="text-center">
+
 <nav>
   <ul class="pagination">
   	<c:if test="${to.curPage > 1 }">
@@ -32,33 +32,3 @@
     </li>
   </ul>
 </nav>
-</div>
-<form action="list.do?curPage=${line}">
-<input name="curPage" type="number" placeholder="이동할 페이지입력">
-<input type="submit" value="이동">
-</form>
-
-
-
-<div class="row">
-  <div class="col-md-3">
-    <div class="input-group">
-    <form id="form_go" action="list.do?curPage=${line}">
-      <input name="curPage" type="number" class="form-control" placeholder="Search for...">
-    </form>
-      <span class="input-group-btn">
-        <button id="btn_go" class="btn btn-default" type="button">Go!</button>
-      </span>
-    </div><!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
-</div><!-- /.row -->
-
-
-
-
-
-
-
-
-
-

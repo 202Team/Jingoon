@@ -16,12 +16,19 @@ public class ReadCommand implements Command{
 	@Override
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+		MemberDTO dto = null;
 		String numS = request.getParameter("num");
-		int num = Integer.parseInt(numS);
-		MemberDTO dto = new MemberDAO().read(num);
+		if(numS != null) {
+			int num = Integer.parseInt(numS);
+			dto = new MemberDAO().read(num);
+			
+		}
+		String id = request.getParameter("id");
+		if(id != null) {
+			dto = new MemberDAO().read(id);
+		}
 		
 		request.setAttribute("dto", dto);
-		
 		return new CommandAction(false, "read.jsp");
 	}
 

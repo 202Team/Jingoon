@@ -4,76 +4,74 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>게시글 보기</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>게시판</title>
+<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
-<a href="http://localhost:8089/TeamProject_Board/main.jsp"><button>홈으로</button></a>
-<c:choose>
-	<c:when test="${empty login}">
-		<a href="http://localhost:8089/TeamProject_Board/loginui.do">로그인</a>
-		<hr>
-		<a href="http://localhost:8089/TeamProject_Board/member/insertui.do"><button>회원가입</button></a>
-	</c:when>
-	<c:otherwise>
-		<a href="http://localhost:8089/TeamProject_Board/member/read.do?num=${login.num}">${login.nickname}</a>님 환영합니다,
-		<a href="http://localhost:8089/TeamProject_Board/logout.do">로그아웃</a>
-		<hr>
-		<a href="http://localhost:8089/TeamProject_Board/board/insertui.do"><button>글쓰기</button></a>
-	</c:otherwise>
-</c:choose>
-		<a href="http://localhost:8089/TeamProject_Board/board/list.do?curPage=${curPage}"><button>글목록보기</button></a>
-		
-<h1>제목 : ${dto.title}</h1>
-글번호 : ${dto.num }<br>
-작성자 : ${dto.author}<br>
-작성일 : ${dto.writeday}<br>
-내용: <br>
-${dto.content }<br>
+	<!--네비게이션바 추가-->
+	<jsp:include page="/header.jsp"/>
 
-<hr>
-<c:if test="${login.num eq 0 }">
-	<a href="http://localhost:8089/TeamProject_Board/member.do">관리자 메뉴</a>
-	<a href="updateui.do?num=${dto.num}">수정</a>
-	<a id="del" href="delete.do?num=${dto.num}">삭제</a>
-</c:if>
-<c:choose>
-	<c:when test="${empty login}">
-<!-- 로그인 안했을 때 추가할 내용  -->
-	<a href="http://localhost:8089/TeamProject_Board/loginui.do">로그인</a>
-	</c:when>
-	<c:otherwise>
-		<c:if test="${login.id eq dto.id }">
-			<a href="updateui.do?num=${dto.num}">수정</a>
-			<a id="del" href="delete.do?num=${dto.num}">삭제</a>
+	<div class="jumbotron">
+		<div class="container">
+		  <h1>${dto.title}</h1>
+		  <p>글번호: ${dto.num }</p>
+		  <p>작성자: ${dto.author}</p>
+		  <p>작성일 : ${dto.writeday}</p>
+		  <div class="alert alert-success">
+		 	 <p >${dto.content }</p>
+		  </div>
+		  <div>
+		  
+		  <p>
+		첨부파일: 
+		<a href="filedownload.do?sysFileName=${dtoFile.sysFileName}&fileNum=${dtoFile.num}"> ${dtoFile.orgFileName}</a>
+		<c:if test="${empty dtoFile}">
+			첨부파일이 없습니다.
 		</c:if>
-		<a href="replyui.do?num=${dto.num}">답글</a>
-		<a href="http://localhost:8089/TeamProject_Board/board/insertui.do"><button>글쓰기</button></a>
-	</c:otherwise>
-</c:choose>
-<!-- 첨부 파일 링크  -->	
-<p>
-	첨부파일: 
-	<a href="filedownload.do?sysFileName=${dtoFile.sysFileName}&fileNum=${dtoFile.num}"> ${dtoFile.orgFileName}</a>
-	<c:if test="${empty dtoFile}">
-		첨부파일이 없습니다.
-	</c:if>
-</p>
-	
-<script type="text/javascript">
-$(document).ready(function(){
-	$("#del").click(function(event){
-		event.preventDefault();
-		var ch = confirm("게시글을 삭제 하시겠습니까?");
-		if(ch) location.assign("delete.do?num=${dto.num}");
-	
-	});
-});
+		</p>
+		</div>
+		  
+		  
+		  <div class="${not empty login ? 'btn' : 'hidden' } ">
+		  	<c:if test="${login.id eq dto.id}">
+		  	
+		  		<a href="updateui.do?num=${dto.num}">
+				<button class="btn btn-primary pull-right"><span>수정</span></button></a>
+				<a id="del" href="delete.do?num=${dto.num}">
+				<button class="btn btn-primary pull-right"><span>삭제</span></button></a>
+			
+			</c:if>
+				<a class="text-right" href="replyui.do?num=${dto.num}">
+				<button class="btn btn-primary pull-right"><span>답글</span></button></a>
+ 			</div>
+ 			<div class="${empty login ? 'btn' : 'hidden' } ">
+ 				<a href="../loginui.do">
+				<button class="btn btn-primary pull-right" title="로그인을 하면 글쓰기를 할 수 있습니다"><span>로그인</span></button></a>
+				
+		  	</div>
+		  	<a href="/TeamProject_Board/board/list.do?curPage=${curPage}">
+		  	<button class="btn btn-primary pull-right"><span>목록으로</span></button></a>
+		</div>
+	</div>
 
-</script>
-
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#li_write").attr("class", "active");
+			$("#del").click(function(event){
+				event.preventDefault();
+				var ch = confirm("게시글을 삭제 하시겠습니까?");
+				if(ch) location.assign("delete.do?num=${dto.num}");
+			
+			});
+		});
+	</script>
 </body>
 </html>
