@@ -19,44 +19,44 @@
 
 	<div class="jumbotron">
 		<div class="container">
-		  <h1>${dto.title}</h1>
-		  <p>글번호: ${dto.num }</p>
-		  <p>작성자: ${dto.author}</p>
-		  <p>작성일 : ${dto.writeday}</p>
+			<div>
+				<h1>${dto.title}</h1>
+				<p>글번호: ${dto.num }</p>
+    			<p>작성자: ${dto.author}</p>
+    			<p>작성일 : ${dto.writeday}</p>
+			</div>
 		  <div class="alert alert-success">
 		 	 <p >${dto.content }</p>
 		  </div>
-		  <div>
 		  
-		  <p>
-		첨부파일: 
+		<div>
+		<button class="btn btn-default">첨부파일</button> 
 		<a href="filedownload.do?sysFileName=${dtoFile.sysFileName}&fileNum=${dtoFile.num}"> ${dtoFile.orgFileName}</a>
 		<c:if test="${empty dtoFile}">
 			첨부파일이 없습니다.
 		</c:if>
-		</p>
 		</div>
-		  
-		  
-		  <div class="${not empty login ? 'btn' : 'hidden' } ">
-		  	<c:if test="${login.id eq dto.id}">
-		  	
-		  		<a href="updateui.do?num=${dto.num}">
-				<button class="btn btn-primary pull-right"><span>수정</span></button></a>
-				<a id="del" href="delete.do?num=${dto.num}">
-				<button class="btn btn-primary pull-right"><span>삭제</span></button></a>
-			
-			</c:if>
-				<a class="text-right" href="replyui.do?num=${dto.num}">
-				<button class="btn btn-primary pull-right"><span>답글</span></button></a>
+		
+		<div class="text-right">
+			<div class="${not empty login ? 'btn' : 'hidden' } ">
+		  		<c:if test="${login.id eq dto.id}">
+				  		<a href="updateui.do?num=${dto.num}">
+						<button class="btn btn-primary pull-right"><span>수정</span></button></a>
+						<a id="del" href="delete.do?num=${dto.num}">
+						<button class="btn btn-primary pull-right"><span>삭제</span></button></a>
+				</c:if>
+					<a class="text-right" href="replyui.do?num=${dto.num}">
+					<button class="btn btn-primary pull-right"><span>답글</span></button></a>
  			</div>
- 			<div class="${empty login ? 'btn' : 'hidden' } ">
- 				<a href="../loginui.do">
-				<button class="btn btn-primary pull-right" title="로그인을 하면 글쓰기를 할 수 있습니다"><span>로그인</span></button></a>
-				
+ 			<div class="btn">
+		  		<a href="/TeamProject_Board/board/list.do?curPage=${curPage}">
+		  		<button class="btn btn-primary pull-right"><span>목록으로</span></button></a>
 		  	</div>
-		  	<a href="/TeamProject_Board/board/list.do?curPage=${curPage}">
-		  	<button class="btn btn-primary pull-right"><span>목록으로</span></button></a>
+		  	<div class="${empty login ? 'btn' : 'hidden' } ">
+	 				<a href="../loginui.do">
+					<button class="btn btn-primary pull-right" title="로그인을 하면 글쓰기를 할 수 있습니다"><span>로그인</span></button></a>
+		  	</div>
+		</div>
 		</div>
 	</div>
 

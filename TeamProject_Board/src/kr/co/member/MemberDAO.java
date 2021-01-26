@@ -357,6 +357,21 @@ public class MemberDAO {
 			closeAll(conn, pstmt, null);
 		}
 	}
+	public void ConfirmDelete(String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update user_tbl set master = -1 where id = ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, null);
+		}
+	}
 	public void RollbackDelete(int num) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;

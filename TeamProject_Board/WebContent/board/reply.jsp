@@ -18,20 +18,19 @@
 	<jsp:include page="/header.jsp"/>
 
 	<div class="container">
-		<h1>${param.oriNumS}번 글의 답글</h1>
+		<div class="text-center">
+			<h1>${param.oriNumS}번 글의 답글</h1>
+		</div>
 		<div class="row">
-			<form
-				action="reply.do"
-				method="post">
+			<div class=".col-xs-12 .col-md-8">
+			<form action="reply.do" method="post">
 				<input name="oriNum" value="${param.oriNumS}" type="hidden">
 				<input name="id" value="${login.id}" type="hidden">
 				<div class="form-group">
 					<div class="col-xs-7">
 						<div class="input-group">
-							<span class="input-group-addon" id="basic-addon1">작성자</span> <input
-								type="text" class="form-control" readonly
-								aria-describedby="basic-addon1" name="author"
-								value="${login.nickname}">
+							<span class="input-group-addon" id="basic-addon1">작성자</span> 
+							<input class="form-control" readonly aria-describedby="basic-addon1" name="author" value="${login.nickname}">
 						</div>
 					</div>
 				</div>
@@ -39,16 +38,14 @@
 				<div class="form-group">
 					<div class="col-xs-7">
 						<div class="input-group">
-							<input type="text" class="form-control" placeholder="제목을 입력하세요"
-								aria-describedby="basic-addon2" name="title" autofocus required maxlength="70"> <span
-								class="input-group-addon" id="basic-addon2">제목</span>
+							<input class="form-control" placeholder="제목을 입력하세요" aria-describedby="basic-addon2" name="title" autofocus required maxlength="70"> 
+							<span class="input-group-addon" id="basic-addon2">제목</span>
 						</div>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<textarea class="form-control bg-warning" rows="20" cols="70"
-						name="content" required></textarea>
+					<textarea class="form-control bg-warning" rows="20" cols="70" name="content" required></textarea>
 				</div>
 
 				<div class="form-group text-right">
@@ -56,6 +53,7 @@
 					<a class="btn btn-default" href="read.do?num=${param.oriNumS}">취소</a>
 				</div>
 			</form>
+			</div>
 		</div>
 	</div>
 

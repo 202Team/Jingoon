@@ -27,12 +27,14 @@
 					<c:if test="${not empty login}">
 						<li id="li_write" ><a href="/TeamProject_Board/board/insertui.do">글쓰기</a></li>
 				
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
+						<li id="li_member" class="dropdown"><a href="#" class="dropdown-toggle"
 										data-toggle="dropdown" role="button" aria-expanded="false">${login.nickname} 님<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								
 								<li><a href="/TeamProject_Board/member/read.do?num=${login.num}">개인정보 확인</a></li>
 								<li><a href="/TeamProject_Board/member/updateui.do?num=${login.num}">개인정보 수정</a></li>
+								<li><a href="${login.num}">비밀번호 변경</a></li>
+								<li><a href="/TeamProject_Board/member/delete.do?num=${login.num}">회원 탈퇴</a></li>
 								<li><a href="/TeamProject_Board/logout.do">로그아웃</a></li>
 								<c:if test="${login.master eq 1 }">
 								<li class="divider"></li>
@@ -40,8 +42,12 @@
 									<li><a href="/TeamProject_Board/member.do">회원목록</a></li>
 									<c:if test="${not empty dto.num}">
 									<li><a href="/TeamProject_Board/member/read.do?id=${dto.id}">작성자 정보</a></li>
+									<li><a href="/TeamProject_Board/member/delete.do?id=${dto.id}">작성회원 블록</a></li>
 									<li><a href="/TeamProject_Board/board/updateui.do?num=${dto.num}">게시글 수정</a></li>
 									<li><a href="/TeamProject_Board/board/delete.do?num=${dto.num}">게시글 삭제</a></li>
+									</c:if>
+									<c:if test="${not empty mdto.id}">
+									
 									</c:if>
 								</c:if>
 							

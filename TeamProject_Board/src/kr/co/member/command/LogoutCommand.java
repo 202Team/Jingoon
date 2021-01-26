@@ -20,7 +20,7 @@ public class LogoutCommand implements Command{
 			session.invalidate();
 		}
 		
-		return new CommandAction(true, "http://localhost:8089/TeamProject_Board/main.jsp");
+		return new CommandAction(true, "/TeamProject_Board/main.jsp");
 	}
 
 }

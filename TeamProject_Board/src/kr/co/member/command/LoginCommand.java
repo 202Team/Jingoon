@@ -29,13 +29,13 @@ public class LoginCommand implements Command{
 		session.setAttribute("login", login);
 		//로그인 실패시 회원가입 화면으로
 		if(session == null || login == null) {
-			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/member/insert.jsp");
+			return new CommandAction(true, "/TeamProject_Board/member/insertui.do");
 		}else if (login.getMaster() == -1) { // 회원탈퇴 시 로그인 불가
 			session.invalidate();
-			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/member/insert.jsp");
+			return new CommandAction(true, "/TeamProject_Board/member/insertui.do");
 		}
 				
-		return new CommandAction(true, "http://localhost:8089/TeamProject_Board/board/list.do");
+		return new CommandAction(true, "/TeamProject_Board/board/list.do");
 	}
 
 	

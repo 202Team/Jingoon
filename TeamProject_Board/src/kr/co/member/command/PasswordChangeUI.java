@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import kr.co.command.Command;
 import kr.co.domain.CommandAction;
 
-public class InsertUICommand implements Command{
+public class PasswordChangeUI implements Command{
 
 	@Override
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-				
-		return new CommandAction(true, "/TeamProject_Board/member/insert.jsp");
+		빨간줄 표시
+		return new CommandAction(true, "passwordChange.jsp");
 	}
 
 }

@@ -20,22 +20,21 @@ public class UpdateUICommand implements Command{
 			throws IOException, ServletException {
 		String numS = request.getParameter("num");
 		int num = Integer.parseInt(numS);
-		MemberDTO dto = new MemberDAO().updateui(num);
+		MemberDTO mdto = new MemberDAO().updateui(num);
 		
 		HttpSession session = request.getSession(false);
-		if(session == null) {
-			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/login.jsp");
-		}
 		LoginDTO login = (LoginDTO)session.getAttribute("login");
-		if(login == null || !(num == login.getNum())){
-			if(login.getMaster() == 1) {
-				request.setAttribute("dto", dto);
+		if(session == null || login == null) {
+			return new CommandAction(true, "/TeamProject_Board/login.jsp");
+		}else if(num != login.getNum()){
+			if(login.getMaster()==1) {
+				request.setAttribute("mdto", mdto);
 				return new CommandAction(false, "update.jsp");
 			}
 			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/login.jsp");
 		}
 		
-		request.setAttribute("dto", dto);
+		request.setAttribute("mdto", mdto);
 		return new CommandAction(false, "update.jsp");
 	}
 

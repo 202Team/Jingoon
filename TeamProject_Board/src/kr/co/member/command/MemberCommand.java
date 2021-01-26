@@ -20,12 +20,12 @@ public class MemberCommand implements Command{
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		HttpSession session = request.getSession(false);
-		if(session ==null){
-			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/loginui.do");
-		}
+
 		LoginDTO login =(LoginDTO) session.getAttribute("login");
-		if(login == null || login.getMaster() != 1 ) {
-			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/loginui.do");
+		if(session ==null || login == null){
+			return new CommandAction(true, "/TeamProject_Board/login.jsp");
+		}else if(login.getMaster() != 1 ) {
+			return new CommandAction(true, "/TeamProject_Board/mainwarning.jsp");
 		}
 		
 		List<MemberDTO> list = new MemberDAO().list();

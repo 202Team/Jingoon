@@ -27,18 +27,17 @@ public class UpdateCommand implements Command{
 		String birth = request.getParameter("birth");
 		// 로그인 유지 확인
 		HttpSession session = request.getSession(false);
-		if(session == null) {
-			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/login.jsp");
-		}
 		LoginDTO login = (LoginDTO)session.getAttribute("login");
-		if(login == null || !id.equals(login.getId())){
+		if(session == null || login == null ) {
+			return new CommandAction(true, "/TeamProject_Board/login.jsp");
+		}else if(!id.equals(login.getId())){
 			if(login.getMaster() == 1) {
 				MemberDTO dto = new MemberDTO(num, id, null, name, nickname, address, null); 
 				dto.setBirth(birth);
 				new MemberDAO().update(dto);
-				return new CommandAction(true, "http://localhost:8089/TeamProject_Board/member.do");
+				return new CommandAction(true, "/TeamProject_Board/member.do");
 			}
-			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/login.jsp");
+			return new CommandAction(true, "/TeamProject_Board/mainwarning.jsp");
 		}
 		
 		MemberDTO dto = new MemberDTO(num, id, null, name, nickname, address, null); 

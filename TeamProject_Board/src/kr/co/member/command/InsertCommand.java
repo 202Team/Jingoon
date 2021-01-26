@@ -27,7 +27,7 @@ public class InsertCommand implements Command{
 		dto.setBirth(birth);
 		new MemberDAO().insert(dto);
 				
-		return new CommandAction(true, "http://localhost:8089/TeamProject_Board/main.jsp");
+		return new CommandAction(true, "/TeamProject_Board/main.jsp");
 	}
 
 }

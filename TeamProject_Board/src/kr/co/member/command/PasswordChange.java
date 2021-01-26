@@ -8,14 +8,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.command.Command;
 import kr.co.domain.CommandAction;
+import kr.co.member.MemberDAO;
 
-public class InsertUICommand implements Command{
+public class PasswordChange implements Command{
 
 	@Override
 	public CommandAction execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-				
-		return new CommandAction(true, "/TeamProject_Board/member/insert.jsp");
+		String pw = request.getParameter("pw");
+		new MemberDAO().passwordChange(pw);
+		return new CommandAction(true, "/main.jsp");
 	}
 
 }

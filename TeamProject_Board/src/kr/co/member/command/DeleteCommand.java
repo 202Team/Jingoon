@@ -19,23 +19,28 @@ public class DeleteCommand implements Command{
 			throws IOException, ServletException {
 		String numS =request.getParameter("num");
 		int num = Integer.parseInt(numS);
+		String id = request.getParameter("id");
 		// 로그인 유지 확인
 		HttpSession session = request.getSession(false);
-		if (session == null) {
-			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/login.jsp");
-		}
 		LoginDTO login = (LoginDTO) session.getAttribute("login");
-		if (login == null || num != login.getNum()) {
+		if (session == null || login == null ) {
+			return new CommandAction(true, "/TeamProject_Board/login.jsp");
+		}else if (num != login.getNum()) {
 			if(login.getMaster() == 1) {
-				new MemberDAO().ConfirmDelete(num);
-				return new CommandAction(true, "http://localhost:8089/TeamProject_Board/member.do");
+				if(numS != null) {
+					new MemberDAO().ConfirmDelete(num);
+					return new CommandAction(true, "/TeamProject_Board/member.do");
+				}else {
+					new MemberDAO().ConfirmDelete(id);
+					return new CommandAction(true, "/TeamProject_Board/member.do");
+				}
 			}
-			return new CommandAction(true, "http://localhost:8089/TeamProject_Board/login.jsp");
+			return new CommandAction(true, "/TeamProject_Board/mainwarning.jsp");
 		}
-		// 이후 추가 탈퇴시 삭제가 아닌 회원정보에 탈퇴정보를 표시해서 로그인불가
+		//회원정보에 탈퇴정보를 표시해서 로그인불가
 		new MemberDAO().ConfirmDelete(num);
 				
-		return new CommandAction(true, "http://localhost:8089/TeamProject_Board/logout.do");
+		return new CommandAction(true, "/TeamProject_Board/logout.do");
 	}
 
 }
