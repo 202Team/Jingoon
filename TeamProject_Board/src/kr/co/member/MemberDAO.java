@@ -387,6 +387,24 @@ public class MemberDAO {
 			closeAll(conn, pstmt, null);
 		}
 	}
+
+	public void passwordChange(String pw, int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "update user_tbl set pw = ? where num = ?";
+		try {
+			conn = dataFactory.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pw);
+			pstmt.setInt(2, num);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeAll(conn, pstmt, null);
+		}
+		
+	}
 	
 	
 }

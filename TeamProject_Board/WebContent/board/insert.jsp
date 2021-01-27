@@ -54,7 +54,7 @@
 				<div class="form-group">
 					<label for="filename">파일 업로드</label>
 					<input name="filename" type="file" id="filename">
-					<p class="help-block">여기에 블록레벨 도움말 예제</p>
+					<p class="help-block"></p>
 				</div>
 
 				<div class="form-group text-right">

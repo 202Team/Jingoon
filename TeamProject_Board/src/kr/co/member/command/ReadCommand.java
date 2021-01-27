@@ -22,7 +22,8 @@ public class ReadCommand implements Command{
 		String numS = request.getParameter("num");
 		HttpSession session = request.getSession(false);
 		LoginDTO login = (LoginDTO)session.getAttribute("login");
-		if(session == null || login == null) {
+				
+		if(session == null ||login == null) {
 			return new CommandAction(true, "/TeamProject_Board/login.jsp");
 		}
 		if(numS != null) {

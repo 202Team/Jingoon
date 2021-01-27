@@ -80,10 +80,12 @@ insert into USERMENU_TBL values (19, '/board/reply.do', 'kr.co.board.command.Rep
 insert into USERMENU_TBL values (20, '/board/search.do', 'kr.co.board.command.SearchCommand')
 insert into USERMENU_TBL values (21, '/fieload/fileupload.do', 'kr.co.fileload.command.FileUploadCommand')
 insert into USERMENU_TBL values (22, '/board/filedownload.do', 'kr.co.fileload.command.FileDownloadCommand')
-insert into USERMENU_TBL values (22, '/board/filedownload.do', 'kr.co.fileload.command.FileDownloadCommand')
 insert into USERMENU_TBL values (23, '/member/jusoPopup.do', 'kr.co.member.command.JusoPoupCommand')
 insert into USERMENU_TBL values (24, '/member.do', 'kr.co.member.command.MemberCommand')
 insert into USERMENU_TBL values (25, '/rollbackdelete.do', 'kr.co.member.command.RollbackDeleteCommand')
+insert into USERMENU_TBL values (26, '/member/passwordChangeui.do', 'kr.co.member.command.PasswordChangeUICommand')
+insert into USERMENU_TBL values (27, '/member/passwordChange.do', 'kr.co.member.command.PasswordChangeCommand')
+
 
 update USERMENU_TBL set sp = '/board/insertui.do' where menunum = 14
 update USERMENU_TBL set fullname = 'kr.co.member.command.JusoPoupCommand' where menunum = 23

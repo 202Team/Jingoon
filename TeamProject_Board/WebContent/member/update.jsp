@@ -109,7 +109,10 @@ function jusoCallBack(roadFullAddr){
 					</div>
 				</div>
 				</form>
+			
 			<div class=".col-xs-12 .col-md-8">
+				<a id="pwc" href="passwordChangeui.do">
+				<button id="pwcbtn" class="btn btn-warning pull-right"><span>비밀번호 변경</span></button></a>
 				<a id="delete" href="delete.do?num=${mdto.num}">
 				<button class="btn btn-danger pull-right"><span>회원탈퇴</span></button></a>
 			</div>
@@ -126,6 +129,17 @@ function jusoCallBack(roadFullAddr){
 			$("#addr").click(function(e){
 				e.preventDefault();
 				goPopup();
+			});
+			$("#delete").click(function(e){
+				e.preventDefault();
+				var ch = confirm("탈퇴하시겠습니까?");
+				if(ch){
+					location.assign("delete.do?num=${mdto.num}");
+				}
+			});
+			$("#pwcbtn").click(function(e){
+				e.preventDefault();
+				window.open("passwordChange.jsp","pop2","width=570,height=420, scrollbars=yes, resizable=yes");
 			});
 		});
 	</script>

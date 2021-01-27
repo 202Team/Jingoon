@@ -57,7 +57,7 @@ public class UpdateCommand implements Command{
 						
 			session.setAttribute("login", login);
 		}
-		return new CommandAction(false, "read.do?id="+id);
+		return new CommandAction(true, "/TeamProject_Board/mainsuccess.jsp");
 	}
 
 }

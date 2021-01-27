@@ -33,7 +33,7 @@
 								
 								<li><a href="/TeamProject_Board/member/read.do?num=${login.num}">개인정보 확인</a></li>
 								<li><a href="/TeamProject_Board/member/updateui.do?num=${login.num}">개인정보 수정</a></li>
-								<li><a href="${login.num}">비밀번호 변경</a></li>
+								<li><a id="pwc" href="/TeamProject_Board/member/passwordChangeui.do">비밀번호 변경</a></li>
 								<li><a href="/TeamProject_Board/member/delete.do?num=${login.num}">회원 탈퇴</a></li>
 								<li><a href="/TeamProject_Board/logout.do">로그아웃</a></li>
 								<c:if test="${login.master eq 1 }">
@@ -46,17 +46,15 @@
 									<li><a href="/TeamProject_Board/board/updateui.do?num=${dto.num}">게시글 수정</a></li>
 									<li><a href="/TeamProject_Board/board/delete.do?num=${dto.num}">게시글 삭제</a></li>
 									</c:if>
-									<c:if test="${not empty mdto.id}">
-									
-									</c:if>
 								</c:if>
 							
 							</ul>					
-							</li>
+						</li>
 					</c:if>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
 		</div>
 	</nav>
+
 	
